@@ -1,7 +1,6 @@
 "
-A simple 2D-Array implementation. 
-
-!! 
+A simple 2D-Array implementation.
+Check the numerous tests.
 
 "
 Class {
@@ -11,7 +10,7 @@ Class {
 		'width',
 		'contents'
 	],
-	#category : 'Containers-Array2D'
+	#category : #'Containers-Array2D'
 }
 
 { #category : #'instance creation' }
