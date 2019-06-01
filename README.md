@@ -16,6 +16,8 @@ This package is part of the Containers project: This project is to collect, clea
 test and document alternate collection datastructures. Each package is modular so that users 
 can only load the collection they need without 100 of related collections.
 
+## Loading
+
 ```
 Metacello new
   baseline: 'ContainersGrid';
@@ -23,6 +25,13 @@ Metacello new
   load.
 ```
 
+## If you want to depend on it
+
+```
+  spec 
+    baseline: 'ContainersGrid' 
+    with: [ spec repository: 'github://Ducasse/Containers-Grid/src' ].
+  ```
 
 ----
 The best way to predict the future is to do it!
