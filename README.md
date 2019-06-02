@@ -20,7 +20,7 @@ can only load the collection they need without 100 of related collections.
 
 ```
 Metacello new
-  baseline: 'ContainersGrid';
+  baseline: 'ContainersArray2D';
   repository: 'github://Ducasse/Containers-Array2D/src';
   load.
 ```
@@ -29,8 +29,8 @@ Metacello new
 
 ```
   spec 
-    baseline: 'ContainersGrid' 
-    with: [ spec repository: 'github://Ducasse/Containers-Grid/src' ].
+    baseline: ''ContainersArray2D' 
+    with: [ spec repository: 'github://Ducasse/Containers-Array2D/src' ].
   ```
 
 ----
