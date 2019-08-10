@@ -10,7 +10,7 @@ BaselineOfContainersArray2D >> baseline: spec [
 
 	spec for: #pharo do: [		
 		spec package: 'Containers-Array2D'.
-		"spec package: 'Containers-Array2D-Tests' with: [ spec requires: #('Containers-Array2D')] " 
+		spec package: 'Containers-Array2D-Tests' with: [ spec requires: #('Containers-Array2D')] 
 		]
 	
 
