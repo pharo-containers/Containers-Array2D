@@ -1,7 +1,7 @@
 Class {
 	#name : #CTArray2DTest,
 	#superclass : #TestCase,
-	#category : 'Containers-Array2D'
+	#category : #'Containers-Array2D-Tests'
 }
 
 { #category : #'tests-converting' }
