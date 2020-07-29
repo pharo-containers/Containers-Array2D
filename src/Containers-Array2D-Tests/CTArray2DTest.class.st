@@ -36,7 +36,7 @@ CTArray2DTest >> testAtAllPut [
 	| foo |
 	foo := self arrayClass width: 5 height: 20.
 	foo atAllPut: 12.
-	foo do: [ :each | self assert: each == 12 ]
+	foo do: [ :each | self assert: each equals: 12 ]
 ]
 
 { #category : #'tests-accessing rows/columns' }
@@ -111,7 +111,8 @@ CTArray2DTest >> testAtXAtY [
 
 { #category : #'tests-accessing' }
 CTArray2DTest >> testAtXAtYPut [
-		| foo |
+	
+	| foo |
 	foo := self arrayClass width: 5 height: 20.
 	foo atX: 1 atY: 1 put: 12.
 	self assert: (foo atX: 1 atY: 1) equals: 12
@@ -131,7 +132,7 @@ CTArray2DTest >> testCopy [
 	self assert: cop width equals: 5.
 	self assert: cop height equals: 3.
 	1 to: cop width do: [ :x | 1 to: cop height do: [ :y | self assert: (cop atColumn: x atRow: y) equals: 0 ] ].
-	self deny: cop == foo
+	self deny: cop identicalTo: foo
 ]
 
 { #category : #'tests-enumeration' }
