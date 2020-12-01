@@ -1,7 +1,7 @@
 # Containers-Array2D
 
-[![Build Status](https://travis-ci.com/pharo-containers/Containers-Array2D.svg?branch=master)](https://travis-ci.com/pharo-container/Containers-Array2D)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)]()
+![https://github.com/pharo-containers/Containers-Array2D/workflows/test/badge.svg](https://github.com/pharo-containers/Containers-Array2D/workflows/test/badge.svg)
+
 
 A better Array2D implementation 
 
