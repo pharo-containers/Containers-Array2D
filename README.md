@@ -1,5 +1,6 @@
 # Containers-Array2D
 
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://img.shields.io/badge/license-MIT-blue.svg)
 ![https://github.com/pharo-containers/Containers-Array2D/workflows/test/badge.svg](https://github.com/pharo-containers/Containers-Array2D/workflows/test/badge.svg)
 
 
