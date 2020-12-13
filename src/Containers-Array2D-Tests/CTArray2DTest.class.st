@@ -219,7 +219,7 @@ CTArray2DTest >> testIndexXY [
 	self assert: (foo indexX: 2 y: 3) equals: (3-1)*(foo width)+2 
 ]
 
-{ #category : #'tests - printing' }
+{ #category : #'tests-printing' }
 CTArray2DTest >> testPrinting [
 
 	self 
@@ -230,7 +230,7 @@ CTArray2DTest >> testPrinting [
 )'
 ]
 
-{ #category : #tests }
+{ #category : #'tests-enumeration' }
 CTArray2DTest >> testRowAndColumnValuesDo [
 	| foo array |
 	array := #(1 2 3 4 5 6).
