@@ -207,6 +207,19 @@ CTArray2D >> postCopy [
 	self setContents: contents copy
 ]
 
+{ #category : #printing }
+CTArray2D >> printOn: aStream [
+
+	aStream nextPutAll: '('; cr.
+	(1 to: self width) 
+		do: [ :r | 
+				(self atRow: r) 
+					do: [ :each | each printOn: aStream ] 
+					separatedBy: [ aStream space ].
+					aStream cr ].
+	aStream nextPutAll: ')'.
+]
+
 { #category : #enumeration }
 CTArray2D >> rowAndColumnValuesDo: aBlock [
 	1 to: self width do: [:col |

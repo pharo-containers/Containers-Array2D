@@ -4,8 +4,15 @@ Class {
 	#category : #'Containers-Array2D-Tests'
 }
 
-{ #category : #'tests-converting' }
+{ #category : #running }
 CTArray2DTest >> arrayClass [
+
+	^ CTArray2D
+]
+
+{ #category : #running }
+CTArray2DTest >> classUnderTest [
+
 	^ CTArray2D
 ]
 
@@ -212,11 +219,22 @@ CTArray2DTest >> testIndexXY [
 	self assert: (foo indexX: 2 y: 3) equals: (3-1)*(foo width)+2 
 ]
 
+{ #category : #'tests - printing' }
+CTArray2DTest >> testPrinting [
+
+	self 
+		assert: self classUnderTest width2Height3 printString
+		equals: '(
+1 2
+3 4
+)'
+]
+
 { #category : #tests }
 CTArray2DTest >> testRowAndColumnValuesDo [
 	| foo array |
 	array := #(1 2 3 4 5 6).
-	foo := self arrayClass width2Height3.   
+	foo := self classUnderTest width2Height3.   
 	foo rowAndColumnValuesDo: [ :y :x :value |
 		self assert: (array at: ((y-1) * 2 + x))
 			equals: value 
