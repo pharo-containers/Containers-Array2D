@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://img.shields.io/badge/license-MIT-blue.svg)
 ![https://github.com/pharo-containers/Containers-Array2D/workflows/matrix/badge.svg](https://github.com/pharo-containers/Containers-Array2D/workflows/matrix/badge.svg)
-![https://github.com/pharo-containers/Containers-Array2D/workflows/currentPharoVersion/badge.svg](https://github.com/pharo-containers/Containers-Array2D/workflows/currentPharoVersion/badge.svg)
+![https://github.com/pharo-containers/Containers-Array2D/workflows/currentStablePharo/badge.svg](https://github.com/pharo-containers/Containers-Array2D/workflows/currentStablePharo/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/pharo-containers/Containers-Array2D/badge.svg?branch=master)](https://coveralls.io/github/pharo-containers/Containers-Array2D?branch=master)
 
 A better Array2D implementation 
