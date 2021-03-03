@@ -71,7 +71,7 @@ CTArray2D >> asArray [
 	^ contents copy
 ]
 
-{ #category : #'accessing-convenience' }
+{ #category : #'accessing x/y' }
 CTArray2D >> at: aPoint [
 	"Answer the element at index Point x, Point y."
 
@@ -143,23 +143,42 @@ CTArray2D >> atRow: y put: aCollection [
 	^ aCollection
 ]
 
-{ #category : #'accessing-convenience' }
+{ #category : #'accessing x/y' }
+CTArray2D >> atX: x [
+	"Answer the content of the whole column at index x"
+
+	| column |
+	column := contents class new: self height.
+	1 to: self height do: [ :index | column at: index put: (self atX: x atY: index) ].
+	^ column
+]
+
+{ #category : #'accessing x/y' }
 CTArray2D >> atX: x atY: y [
 	"Answer the element at index x, y."
 
 	^ contents at: (self indexX: x y: y)
 ]
 
-{ #category : #'accessing-convenience' }
+{ #category : #'accessing x/y' }
 CTArray2D >> atX: x atY: y put: value [
 	"Store a value at index x,y and answer it."
 
 	^ contents at: (self indexX: x y: y) put: value
 ]
 
+{ #category : #'accessing rows/columns' }
+CTArray2D >> atX: x put: aCollection [
+	"Put in a whole column."
+
+	aCollection size = self height ifFalse: [self error: 'wrong column size'].
+	aCollection doWithIndex: [:value :y | self atX: x atY: y put: value].
+	^ aCollection
+]
+
 { #category : #enumeration }
 CTArray2D >> do: aBlock [
-	"Iterate with X varying most quickly.  6/20/96 tk"
+	"Iterate with X varying most quickly."
 
 	contents do: aBlock
 ]
@@ -183,7 +202,7 @@ CTArray2D >> extent: extent fromArray: anArray [
 
 { #category : #accessing }
 CTArray2D >> height [
-    "Answer the receiver's second dimension."
+    "Answer the receiver's height, i.e., its number of row/lines or y."
 
 	^ contents size // width
 ]
@@ -201,6 +220,16 @@ CTArray2D >> indexX: x y: y [
 	^ (y - 1) * width + x
 ]
 
+{ #category : #inspector }
+CTArray2D >> inpectionGrid [
+	<inspectorPresentationOrder: 35 title: 'Column/Row'>
+
+	^ SpTextPresenter new 
+		text: (self printString);
+		yourself
+
+]
+
 { #category : #copying }
 CTArray2D >> postCopy [
 	super postCopy. 
@@ -211,7 +240,7 @@ CTArray2D >> postCopy [
 CTArray2D >> printOn: aStream [
 
 	aStream nextPutAll: '('; cr.
-	(1 to: self width) 
+	(1 to: self height) 
 		do: [ :r | 
 				(self atRow: r) 
 					do: [ :each | each printOn: aStream ] 
@@ -242,7 +271,7 @@ CTArray2D >> setContents: aCollection [
 
 { #category : #private }
 CTArray2D >> setWidth: aSize [
-	"set the width of the receiver. It should be in sync with the size of the internal array used to store the contents, i.e., contents size \\ aSize should always be zero."
+	"Set the width of the receiver. It should be in sync with the size of the internal array used to store the contents, i.e., contents size \\ aSize should always be zero."
 	
 	width := aSize
 ]
@@ -254,7 +283,7 @@ CTArray2D >> size [
 
 { #category : #accessing }
 CTArray2D >> width [
-	"Answer the receiver's first dimension."
+	"Answer the receiver's width, i.e., number of columns or x."
 
 	^ width
 ]
