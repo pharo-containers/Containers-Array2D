@@ -1,6 +1,10 @@
 "
 A simple 2D-Array implementation.
+
+I offer colum/row and x/y API.
+
 Check the numerous tests.
+
 
 "
 Class {
@@ -71,14 +75,14 @@ CTArray2D >> asArray [
 	^ contents copy
 ]
 
-{ #category : #'accessing x/y' }
+{ #category : #'accessing convenience' }
 CTArray2D >> at: aPoint [
 	"Answer the element at index Point x, Point y."
 
 	^ contents at: (self indexX: aPoint x y: aPoint y)
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing convenience' }
 CTArray2D >> at: aPoint put: value [
 	"Store a value at index aPoint x, aPoint y and answer it."
 
@@ -102,14 +106,14 @@ CTArray2D >> atColumn: x [
 	^ column
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing rows/columns' }
 CTArray2D >> atColumn: x atRow: y [
 	"Answer the element at index x, y."
 
 	^ contents at: (self indexX: x y: y)
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing rows/columns' }
 CTArray2D >> atColumn: x atRow: y put: value [
 	"Store a value at index x,y and answer it."
 
@@ -127,7 +131,7 @@ CTArray2D >> atColumn: x put: aCollection [
 
 { #category : #'accessing rows/columns' }
 CTArray2D >> atRow: y [
-	"Answer the content of the whole column at index x"
+	"Answer the content of the whole column at y"
 
 	(y < 1 or: [ y > self height ])
 		ifTrue: [ self errorSubscriptBounds: y ].
@@ -144,16 +148,6 @@ CTArray2D >> atRow: y put: aCollection [
 ]
 
 { #category : #'accessing x/y' }
-CTArray2D >> atX: x [
-	"Answer the content of the whole column at index x"
-
-	| column |
-	column := contents class new: self height.
-	1 to: self height do: [ :index | column at: index put: (self atX: x atY: index) ].
-	^ column
-]
-
-{ #category : #'accessing x/y' }
 CTArray2D >> atX: x atY: y [
 	"Answer the element at index x, y."
 
@@ -165,15 +159,6 @@ CTArray2D >> atX: x atY: y put: value [
 	"Store a value at index x,y and answer it."
 
 	^ contents at: (self indexX: x y: y) put: value
-]
-
-{ #category : #'accessing rows/columns' }
-CTArray2D >> atX: x put: aCollection [
-	"Put in a whole column."
-
-	aCollection size = self height ifFalse: [self error: 'wrong column size'].
-	aCollection doWithIndex: [:value :y | self atX: x atY: y put: value].
-	^ aCollection
 ]
 
 { #category : #enumeration }
@@ -251,6 +236,8 @@ CTArray2D >> printOn: aStream [
 
 { #category : #enumeration }
 CTArray2D >> rowAndColumnValuesDo: aBlock [
+	"aBlock is expecting three values: row, column and value"
+	
 	1 to: self width do: [:col |
 		1 to: self height do: [:row |
 			aBlock value: row value: col value: (self atColumn: col atRow: row)]]
