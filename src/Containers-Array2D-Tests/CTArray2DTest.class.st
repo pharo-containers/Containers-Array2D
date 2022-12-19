@@ -226,7 +226,7 @@ CTArray2DTest >> testIndexXY [
 
 { #category : #'tests-printing' }
 CTArray2DTest >> testPrinting [
-	self halt.
+
 	self 
 		assert: self classUnderTest width2Height3 printString
 		equals: '(
