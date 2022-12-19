@@ -71,14 +71,14 @@ CTArray2D >> asArray [
 	^ contents copy
 ]
 
-{ #category : #'accessing-convenience' }
+{ #category : #'accessing convenience' }
 CTArray2D >> at: aPoint [
 	"Answer the element at index Point x, Point y."
 
 	^ contents at: (self indexX: aPoint x y: aPoint y)
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing convenience' }
 CTArray2D >> at: aPoint put: value [
 	"Store a value at index aPoint x, aPoint y and answer it."
 
@@ -102,14 +102,14 @@ CTArray2D >> atColumn: x [
 	^ column
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing rows/columns' }
 CTArray2D >> atColumn: x atRow: y [
 	"Answer the element at index x, y."
 
 	^ contents at: (self indexX: x y: y)
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing rows/columns' }
 CTArray2D >> atColumn: x atRow: y put: value [
 	"Store a value at index x,y and answer it."
 
@@ -127,7 +127,7 @@ CTArray2D >> atColumn: x put: aCollection [
 
 { #category : #'accessing rows/columns' }
 CTArray2D >> atRow: y [
-	"Answer the content of the whole column at index x"
+	"Answer the content of the whole column at y"
 
 	(y < 1 or: [ y > self height ])
 		ifTrue: [ self errorSubscriptBounds: y ].
@@ -143,14 +143,14 @@ CTArray2D >> atRow: y put: aCollection [
 	^ aCollection
 ]
 
-{ #category : #'accessing-convenience' }
+{ #category : #'accessing x/y' }
 CTArray2D >> atX: x atY: y [
 	"Answer the element at index x, y."
 
 	^ contents at: (self indexX: x y: y)
 ]
 
-{ #category : #'accessing-convenience' }
+{ #category : #'accessing x/y' }
 CTArray2D >> atX: x atY: y put: value [
 	"Store a value at index x,y and answer it."
 
@@ -168,7 +168,7 @@ CTArray2D >> basicPrintOnInspector [
 
 { #category : #enumeration }
 CTArray2D >> do: aBlock [
-	"Iterate with X varying most quickly.  6/20/96 tk"
+	"Iterate with X varying most quickly."
 
 	contents do: aBlock
 ]
@@ -192,7 +192,7 @@ CTArray2D >> extent: extent fromArray: anArray [
 
 { #category : #accessing }
 CTArray2D >> height [
-    "Answer the receiver's second dimension."
+    "Answer the receiver's height, i.e., its number of row/lines or y."
 
 	^ contents size // width
 ]
@@ -208,6 +208,16 @@ CTArray2D >> indexX: x y: y [
 	(x < 1 or: [ x > width ])
 		ifTrue: [ self errorSubscriptBounds: x ].
 	^ (y - 1) * width + x
+]
+
+{ #category : #inspector }
+CTArray2D >> inpectionGrid [
+	<inspectorPresentationOrder: 35 title: 'Column/Row'>
+
+	^ SpTextPresenter new 
+		text: (self printString);
+		yourself
+
 ]
 
 { #category : #copying }
@@ -231,6 +241,8 @@ CTArray2D >> printOn: aStream [
 
 { #category : #enumeration }
 CTArray2D >> rowAndColumnValuesDo: aBlock [
+	"aBlock is expecting three values: row, column and value"
+	
 	1 to: self width do: [:col |
 		1 to: self height do: [:row |
 			aBlock value: row value: col value: (self atColumn: col atRow: row)]]
@@ -251,7 +263,7 @@ CTArray2D >> setContents: aCollection [
 
 { #category : #private }
 CTArray2D >> setWidth: aSize [
-	"set the width of the receiver. It should be in sync with the size of the internal array used to store the contents, i.e., contents size \\ aSize should always be zero."
+	"Set the width of the receiver. It should be in sync with the size of the internal array used to store the contents, i.e., contents size \\ aSize should always be zero."
 	
 	width := aSize
 ]
@@ -263,7 +275,7 @@ CTArray2D >> size [
 
 { #category : #accessing }
 CTArray2D >> width [
-	"Answer the receiver's first dimension."
+	"Answer the receiver's width, i.e., number of columns or x."
 
 	^ width
 ]

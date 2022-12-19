@@ -55,14 +55,14 @@ CTArray2DTest >> testAtColumn [
 	self assert: (foo atColumn: 2) equals: #(1 2 3 4 5)
 ]
 
-{ #category : #'tests-accessing' }
+{ #category : #'tests-accessing rows/columns' }
 CTArray2DTest >> testAtColumnAtRow [
 	self assert: (self arrayClass width2Height3 atColumn: 1 atRow: 1) equals: 1.
 	self assert: (self arrayClass width2Height3 atColumn: 1 atRow: 2) equals: 3.
 	self assert: (self arrayClass width2Height3 atColumn: 2 atRow: 3) equals: 6
 ]
 
-{ #category : #'tests-accessing' }
+{ #category : #'tests-accessing rows/columns' }
 CTArray2DTest >> testAtColumnAtRowPut [
 	| foo |
 	foo := self arrayClass width: 5 height: 20.
@@ -88,10 +88,11 @@ CTArray2DTest >> testAtColumnPut [
 
 { #category : #'tests-accessing' }
 CTArray2DTest >> testAtPut [
-		| foo |
+	
+	| foo |
 	foo := self arrayClass width: 5 height: 20.
-	foo at: 1@1 put: 12.
-	self assert: (foo at: 1@1) equals: 12
+	foo at: 1@5 put: 12.
+	self assert: (foo atX: 1 atY: 5) equals: 12
 ]
 
 { #category : #'tests-accessing rows/columns' }
@@ -110,14 +111,17 @@ CTArray2DTest >> testAtRowPut [
 	1 to: foo width do: [ :x | self assert: (foo atColumn: x atRow: 2) equals: 1 ]
 ]
 
-{ #category : #'tests-accessing' }
+{ #category : #'tests-accessing x/y' }
 CTArray2DTest >> testAtXAtY [
-	self assert: (self arrayClass width2Height3 atX: 1 atY: 1) equals: 1.
-	self assert: (self arrayClass width2Height3 atX: 1 atY: 2) equals: 3.
-	self assert: (self arrayClass width2Height3 atX: 2 atY: 3) equals: 6
+	
+	| matrix |
+	matrix := self arrayClass width2Height3.
+	self assert: (matrix atX: 1 atY: 1) equals: 1.
+	self assert: (matrix atX: 1 atY: 2) equals: 3.
+	self assert: (matrix atX: 2 atY: 3) equals: 6
 ]
 
-{ #category : #'tests-accessing' }
+{ #category : #'tests-accessing x/y' }
 CTArray2DTest >> testAtXAtYPut [
 	
 	| foo |
