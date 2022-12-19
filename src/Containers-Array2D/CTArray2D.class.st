@@ -1,5 +1,5 @@
 "
-A simple 2D-Array implementation.
+A simple 2D-Array implementation that is growing down. Therefore the first row is on the top.
 Check the numerous tests.
 
 "
@@ -157,6 +157,15 @@ CTArray2D >> atX: x atY: y put: value [
 	^ contents at: (self indexX: x y: y) put: value
 ]
 
+{ #category : #inspector }
+CTArray2D >> basicPrintOnInspector [
+	<inspectorPresentationOrder: 35 title: 'Array2D'>
+
+	^ SpTextPresenter new 
+		text: self printString;
+		yourself
+]
+
 { #category : #enumeration }
 CTArray2D >> do: aBlock [
 	"Iterate with X varying most quickly.  6/20/96 tk"
@@ -211,7 +220,7 @@ CTArray2D >> postCopy [
 CTArray2D >> printOn: aStream [
 
 	aStream nextPutAll: '('; cr.
-	(1 to: self width) 
+	(1 to: self height) 
 		do: [ :r | 
 				(self atRow: r) 
 					do: [ :each | each printOn: aStream ] 
