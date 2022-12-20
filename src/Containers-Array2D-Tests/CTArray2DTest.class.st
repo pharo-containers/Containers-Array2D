@@ -258,6 +258,21 @@ CTArray2DTest >> testRowsAndColumnsDo [
 	foo rowsAndColumnsDo: [ :y :x | self assert: (foo atColumn: x atRow: y) equals: (array at: (y - 1) * 2 + x) ]
 ]
 
+{ #category : #'tests-enumeration' }
+CTArray2DTest >> testRowsAndColumnsPut [
+
+	| foo array |
+	foo := self arrayClass width: 2 height: 3.
+	self
+		shouldnt: [ foo rowsAndColumnsPut: [ :row :col | row * 10 + col ] ]
+		raise: Error.
+	array := #( 11 12 21 22 31 32 ).
+	foo rowsAndColumnsDo: [ :y :x | 
+		self
+			assert: (foo atColumn: x atRow: y)
+			equals: (array at: y - 1 * 2 + x) ]
+]
+
 { #category : #'tests-private' }
 CTArray2DTest >> testSetContents [
 	| foo |
@@ -288,6 +303,21 @@ CTArray2DTest >> testWidth [
 
 	self assert: (self arrayClass width: 5 height: 20) width
  equals: 5
+]
+
+{ #category : #'tests-enumeration' }
+CTArray2DTest >> testWidthHeightTabulate [
+
+	| foo array |
+	foo := self arrayClass
+		       width: 2
+		       height: 3
+		       tabulate: [ :x :y | y * 10 + x ].
+	array := #( 11 12 21 22 31 32 ).
+	foo rowsAndColumnsDo: [ :y :x | 
+		self
+			assert: (foo atColumn: x atRow: y)
+			equals: (array at: y - 1 * 2 + x) ]
 ]
 
 { #category : #'tests-private' }
