@@ -5,7 +5,7 @@ Check the numerous tests.
 "
 Class {
 	#name : #CTArray2D,
-	#superclass : #Collection,
+	#superclass : #Object,
 	#instVars : [
 		'width',
 		'contents'
@@ -63,12 +63,6 @@ CTArray2D class >> width: width height: height [
 { #category : #'instance creation' }
 CTArray2D class >> width: width height: height type: collectionClass [
 	^ self basicNew width: width height: height type: collectionClass
-]
-
-{ #category : #adding }
-CTArray2D >> add: newObject [
-
-	self shouldNotImplement
 ]
 
 { #category : #converting }
@@ -243,12 +237,6 @@ CTArray2D >> printOn: aStream [
 					separatedBy: [ aStream space ].
 					aStream cr ].
 	aStream nextPutAll: ')'.
-]
-
-{ #category : #removing }
-CTArray2D >> remove: oldObject ifAbsent: anExceptionBlock [ 
-
-	self shouldNotImplement
 ]
 
 { #category : #enumeration }
