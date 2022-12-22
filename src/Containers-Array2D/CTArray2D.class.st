@@ -229,6 +229,24 @@ CTArray2D >> postCopy [
 { #category : #printing }
 CTArray2D >> printOn: aStream [
 
+	"Self evaluating representation is prefered"
+	
+	"(CTArray2D fromArray: #(1 2 3 4 5 6) width: 2) printString >>> 'CTArray2D fromArray: #(1 2 3 4 5 6) width: 2'"
+
+	"(CTArray2D fromArray: 'abcdef' width: 3) printString >>> 'CTArray2D fromArray: ''abcdef'' width: 3'"
+
+	self isSelfEvaluating ifTrue: [
+		aStream
+			nextPutAll: self class name;
+			space;
+			nextPutAll: #fromArray:;
+			space;
+			print: contents;
+			space;
+			nextPutAll: #width:;
+			space;
+			print: width.
+			^ self  ].
 	aStream nextPutAll: '('; cr.
 	(1 to: self height) 
 		do: [ :r | 
