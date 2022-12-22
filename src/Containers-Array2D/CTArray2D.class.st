@@ -220,6 +220,12 @@ CTArray2D >> inpectionGrid [
 
 ]
 
+{ #category : #'self evaluating' }
+CTArray2D >> isSelfEvaluating [
+
+	^ self class == CTArray2D and: [ contents isSelfEvaluating ]
+]
+
 { #category : #copying }
 CTArray2D >> postCopy [
 	super postCopy. 
