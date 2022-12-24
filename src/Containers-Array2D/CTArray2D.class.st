@@ -272,11 +272,30 @@ CTArray2D >> rowAndColumnValuesDo: aBlock [
 			aBlock value: row value: col value: (self atColumn: col atRow: row)]]
 ]
 
+{ #category : #converting }
+CTArray2D >> rows [
+
+	"Returns an array of rows."
+
+	"CTArray2D width2Height3 rows >>> #(#(1 2) #(3 4) #(5 6))"
+	"(CTArray2D fromArray: 'ABCDEF' width: 3) rows >>> #('ABC' 'DEF')"
+
+	^ (1 to: self height) collect: [ :rowIndex | self atRow: rowIndex ]
+]
+
 { #category : #enumeration }
 CTArray2D >> rowsAndColumnsDo: aBlock [
 	1 to: self width do: [:col |
 		1 to: self height do: [:row |
 			aBlock value: row value: col]]
+]
+
+{ #category : #enumerating }
+CTArray2D >> rowsDo: aBlock [
+
+	"Iterate on each row. See also `atRow:` and `rows`"
+
+	1 to: self height do: [ :i | aBlock value: (self atRow: i) ]
 ]
 
 { #category : #private }
