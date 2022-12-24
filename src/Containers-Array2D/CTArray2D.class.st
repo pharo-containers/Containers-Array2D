@@ -298,6 +298,19 @@ CTArray2D >> postCopy [
 ]
 
 { #category : #printing }
+CTArray2D >> printGridOn: aStream [
+
+	"A raw grid-like representation"
+
+	(1 to: self height) 
+		do: [ :r | 
+				(self atRow: r) 
+					do: [ :each | each printOn: aStream ] 
+					separatedBy: [ aStream space ].
+					aStream cr ].
+]
+
+{ #category : #printing }
 CTArray2D >> printOn: aStream [
 
 	"Self evaluating representation is prefered"
@@ -318,14 +331,18 @@ CTArray2D >> printOn: aStream [
 			space;
 			print: width.
 			^ self  ].
+	
 	aStream nextPutAll: '('; cr.
-	(1 to: self height) 
-		do: [ :r | 
-				(self atRow: r) 
-					do: [ :each | each printOn: aStream ] 
-					separatedBy: [ aStream space ].
-					aStream cr ].
+	self printGridOn: aStream.
 	aStream nextPutAll: ')'.
+]
+
+{ #category : #printing }
+CTArray2D >> printRowsOn: aStream [
+
+	self rowsDo: [ :row | 
+		row printOn: aStream.
+		aStream cr ]
 ]
 
 { #category : #enumeration }
