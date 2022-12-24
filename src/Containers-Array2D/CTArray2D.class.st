@@ -65,6 +65,18 @@ CTArray2D class >> width: width height: height type: collectionClass [
 	^ self basicNew width: width height: height type: collectionClass
 ]
 
+{ #category : #comparing }
+CTArray2D >> = anArray2D [
+	"Two array2D are equal if
+	 (a) they are the same 'kind' of thing.
+	 (b) they have the same dimensions (only check width in fact).
+	 (c) the contents are ="
+
+	(anArray2D isKindOf: CTArray2D) ifFalse: [^false].
+	self width = anArray2D width ifFalse: [^false].
+	^ contents = anArray2D contents.
+]
+
 { #category : #converting }
 CTArray2D >> asArray [
 	"return a copy of the receiver"
@@ -166,6 +178,12 @@ CTArray2D >> basicPrintOnInspector [
 		yourself
 ]
 
+{ #category : #private }
+CTArray2D >> contents [
+
+	^ contents
+]
+
 { #category : #enumeration }
 CTArray2D >> do: aBlock [
 	"Iterate with X varying most quickly."
@@ -188,6 +206,12 @@ CTArray2D >> extent: extent fromArray: anArray [
 		ifFalse: [ ^ self error: 'dimensions don''t match' ].
 	width := extent x.
 	contents := anArray
+]
+
+{ #category : #comparing }
+CTArray2D >> hash [
+
+	^ contents hash + width
 ]
 
 { #category : #accessing }
