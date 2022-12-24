@@ -280,9 +280,18 @@ CTArray2D >> inpectionGrid [
 	<inspectorPresentationOrder: 35 title: 'Column/Row'>
 
 	^ SpTextPresenter new 
-		text: (self printString);
+		text: (String streamContents: [ :aStream | self printGridOn: aStream ]);
 		yourself
 
+]
+
+{ #category : #inspector }
+CTArray2D >> inspectionRows [
+	<inspectorPresentationOrder: 35 title: 'Rows'>
+
+	^ SpTextPresenter new 
+		text: (String streamContents: [ :aStream | self printRowsOn: aStream ]);
+		yourself
 ]
 
 { #category : #'self evaluating' }
