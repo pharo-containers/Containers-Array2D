@@ -30,6 +30,47 @@ CTArray2D class >> fromArray: aCollection width: aSize [
 ]
 
 { #category : #'instance creation' }
+CTArray2D class >> fromRows: rows pad: paddingElement [
+
+	"Allocate an Array2D large enough to accomodate the given rows.
+	 paddingElement are used to fill the right end of short rows.
+	 If no padding is needed, paddingElement is ignored."
+
+	"(CTArray2D fromRows: #((11 21)()(31)) pad: 0) >>>
+	 (CTArray2D fromArray: #(11 21 0 0 31 0) width: 2)"
+	
+	"(CTArray2D fromRows: { 'aa'. 'bbb'. 'c' } pad: $x) >>>
+	 (CTArray2D fromArray: 'aaxbbbcxx' width: 3)"
+
+	"(CTArray2D fromRows: #((11 21)(21 22)) pad: nil) >>>
+	 (CTArray2D fromArray: #(11 21 21 22) width: 2)"
+
+	"This method is somewhat the inverse of `rows`:"
+
+	"|tmp| tmp := CTArray2D width2Height3.
+	 (CTArray2D fromRows: (tmp rows) pad: nil) >>> tmp"
+
+	"The next example transforms a multi-line text (read from a file for instance) into a CTArray2D:"
+	
+	"(CTArray2D fromRows: ('aa
+bbb
+c
+' lines) pad: $ ) >>> (CTArray2D fromArray: 'aa bbbc  ' width: 3)"
+
+	| width contents pad |
+	width := rows max: [ :row | row size ].
+	contents := rows first species new: (width * rows size) streamContents: [ :aStream |
+		rows do: [  :row |
+			aStream nextPutAll: row.
+			pad := width - row size.
+			pad > 0 ifTrue: [ aStream next: pad put: paddingElement ].
+		]
+	].
+
+	^ self fromArray: contents width: width.
+]
+
+{ #category : #'instance creation' }
 CTArray2D class >> new [
 
 	^ self basicNew
