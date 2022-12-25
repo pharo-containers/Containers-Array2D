@@ -102,6 +102,20 @@ CTArray2D class >> width: width height: height [
 ]
 
 { #category : #'instance creation' }
+CTArray2D class >> width: width height: height tabulate: aTwoArgumentBlock [
+
+	"Answer a new CTArray2D of the given dimensions where
+	 result atX: x atY: y is aTwoArgumentBlock value: x value: y"
+
+	| newArray |
+	newArray := self basicNew width: width height: height type: Array.
+	1 to: newArray width do: [ :x | 
+		1 to: newArray height do: [ :y | 
+			newArray atX: x atY: y put: (aTwoArgumentBlock value: x value: y) ] ].
+	^ newArray
+]
+
+{ #category : #'instance creation' }
 CTArray2D class >> width: width height: height type: collectionClass [
 	^ self basicNew width: width height: height type: collectionClass
 ]
@@ -381,9 +395,18 @@ CTArray2D >> rowsAndColumnsDo: aBlock [
 			aBlock value: row value: col]]
 ]
 
+{ #category : #enumeration }
+CTArray2D >> rowsAndColumnsPut: aTwoArgumentBlock [
+	"Set the value at col,row as the value of aTwoArgumentBlock with row and column as inputs."
+
+	1 to: self width do: [ :col | 
+		1 to: self height do: [ :row | 
+			contents
+				at: (self indexX: col y: row)
+				put: (aTwoArgumentBlock value: row value: col) ] ]
+
 { #category : #enumerating }
 CTArray2D >> rowsDo: aBlock [
-
 	"Iterate on each row. See also `atRow:` and `rows`"
 
 	1 to: self height do: [ :i | aBlock value: (self atRow: i) ]
