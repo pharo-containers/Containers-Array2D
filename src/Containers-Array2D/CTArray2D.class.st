@@ -30,6 +30,47 @@ CTArray2D class >> fromArray: aCollection width: aSize [
 ]
 
 { #category : #'instance creation' }
+CTArray2D class >> fromRows: rows pad: paddingElement [
+
+	"Allocate an Array2D large enough to accomodate the given rows.
+	 paddingElement are used to fill the right end of short rows.
+	 If no padding is needed, paddingElement is ignored."
+
+	"(CTArray2D fromRows: #((11 21)()(31)) pad: 0) >>>
+	 (CTArray2D fromArray: #(11 21 0 0 31 0) width: 2)"
+	
+	"(CTArray2D fromRows: { 'aa'. 'bbb'. 'c' } pad: $x) >>>
+	 (CTArray2D fromArray: 'aaxbbbcxx' width: 3)"
+
+	"(CTArray2D fromRows: #((11 21)(21 22)) pad: nil) >>>
+	 (CTArray2D fromArray: #(11 21 21 22) width: 2)"
+
+	"This method is somewhat the inverse of `rows`:"
+
+	"|tmp| tmp := CTArray2D width2Height3.
+	 (CTArray2D fromRows: (tmp rows) pad: nil) >>> tmp"
+
+	"The next example transforms a multi-line text (read from a file for instance) into a CTArray2D:"
+	
+	"(CTArray2D fromRows: ('aa
+bbb
+c
+' lines) pad: $ ) >>> (CTArray2D fromArray: 'aa bbbc  ' width: 3)"
+
+	| width contents pad |
+	width := rows max: [ :row | row size ].
+	contents := rows first species new: (width * rows size) streamContents: [ :aStream |
+		rows do: [  :row |
+			aStream nextPutAll: row.
+			pad := width - row size.
+			pad > 0 ifTrue: [ aStream next: pad put: paddingElement ].
+		]
+	].
+
+	^ self fromArray: contents width: width.
+]
+
+{ #category : #'instance creation' }
 CTArray2D class >> new [
 
 	^ self basicNew
@@ -77,6 +118,18 @@ CTArray2D class >> width: width height: height tabulate: aTwoArgumentBlock [
 { #category : #'instance creation' }
 CTArray2D class >> width: width height: height type: collectionClass [
 	^ self basicNew width: width height: height type: collectionClass
+]
+
+{ #category : #comparing }
+CTArray2D >> = anArray2D [
+	"Two array2D are equal if
+	 (a) they are the same 'kind' of thing.
+	 (b) they have the same dimensions (only check width in fact).
+	 (c) the contents are ="
+
+	(anArray2D isKindOf: CTArray2D) ifFalse: [^false].
+	self width = anArray2D width ifFalse: [^false].
+	^ contents = anArray2D contents.
 ]
 
 { #category : #converting }
@@ -180,6 +233,12 @@ CTArray2D >> basicPrintOnInspector [
 		yourself
 ]
 
+{ #category : #private }
+CTArray2D >> contents [
+
+	^ contents
+]
+
 { #category : #enumeration }
 CTArray2D >> do: aBlock [
 	"Iterate with X varying most quickly."
@@ -202,6 +261,12 @@ CTArray2D >> extent: extent fromArray: anArray [
 		ifFalse: [ ^ self error: 'dimensions don''t match' ].
 	width := extent x.
 	contents := anArray
+]
+
+{ #category : #comparing }
+CTArray2D >> hash [
+
+	^ contents hash + width
 ]
 
 { #category : #accessing }
@@ -229,9 +294,24 @@ CTArray2D >> inpectionGrid [
 	<inspectorPresentationOrder: 35 title: 'Column/Row'>
 
 	^ SpTextPresenter new 
-		text: (self printString);
+		text: (String streamContents: [ :aStream | self printGridOn: aStream ]);
 		yourself
 
+]
+
+{ #category : #inspector }
+CTArray2D >> inspectionRows [
+	<inspectorPresentationOrder: 35 title: 'Rows'>
+
+	^ SpTextPresenter new 
+		text: (String streamContents: [ :aStream | self printRowsOn: aStream ]);
+		yourself
+]
+
+{ #category : #'self evaluating' }
+CTArray2D >> isSelfEvaluating [
+
+	^ self class == CTArray2D and: [ contents isSelfEvaluating ]
 ]
 
 { #category : #copying }
@@ -241,16 +321,51 @@ CTArray2D >> postCopy [
 ]
 
 { #category : #printing }
-CTArray2D >> printOn: aStream [
+CTArray2D >> printGridOn: aStream [
 
-	aStream nextPutAll: '('; cr.
+	"A raw grid-like representation"
+
 	(1 to: self height) 
 		do: [ :r | 
 				(self atRow: r) 
 					do: [ :each | each printOn: aStream ] 
 					separatedBy: [ aStream space ].
 					aStream cr ].
+]
+
+{ #category : #printing }
+CTArray2D >> printOn: aStream [
+
+	"Self evaluating representation is prefered"
+	
+	"(CTArray2D fromArray: #(1 2 3 4 5 6) width: 2) printString >>> 'CTArray2D fromArray: #(1 2 3 4 5 6) width: 2'"
+
+	"(CTArray2D fromArray: 'abcdef' width: 3) printString >>> 'CTArray2D fromArray: ''abcdef'' width: 3'"
+
+	self isSelfEvaluating ifTrue: [
+		aStream
+			nextPutAll: self class name;
+			space;
+			nextPutAll: #fromArray:;
+			space;
+			print: contents;
+			space;
+			nextPutAll: #width:;
+			space;
+			print: width.
+			^ self  ].
+	
+	aStream nextPutAll: '('; cr.
+	self printGridOn: aStream.
 	aStream nextPutAll: ')'.
+]
+
+{ #category : #printing }
+CTArray2D >> printRowsOn: aStream [
+
+	self rowsDo: [ :row | 
+		row printOn: aStream.
+		aStream cr ]
 ]
 
 { #category : #enumeration }
@@ -262,6 +377,17 @@ CTArray2D >> rowAndColumnValuesDo: aBlock [
 			aBlock value: row value: col value: (self atColumn: col atRow: row)]]
 ]
 
+{ #category : #converting }
+CTArray2D >> rows [
+
+	"Returns an array of rows."
+
+	"CTArray2D width2Height3 rows >>> #(#(1 2) #(3 4) #(5 6))"
+	"(CTArray2D fromArray: 'ABCDEF' width: 3) rows >>> #('ABC' 'DEF')"
+
+	^ (1 to: self height) collect: [ :rowIndex | self atRow: rowIndex ]
+]
+
 { #category : #enumeration }
 CTArray2D >> rowsAndColumnsDo: aBlock [
 	1 to: self width do: [:col |
@@ -271,7 +397,6 @@ CTArray2D >> rowsAndColumnsDo: aBlock [
 
 { #category : #enumeration }
 CTArray2D >> rowsAndColumnsPut: aTwoArgumentBlock [
-
 	"Set the value at col,row as the value of aTwoArgumentBlock with row and column as inputs."
 
 	1 to: self width do: [ :col | 
@@ -279,6 +404,12 @@ CTArray2D >> rowsAndColumnsPut: aTwoArgumentBlock [
 			contents
 				at: (self indexX: col y: row)
 				put: (aTwoArgumentBlock value: row value: col) ] ]
+
+{ #category : #enumerating }
+CTArray2D >> rowsDo: aBlock [
+	"Iterate on each row. See also `atRow:` and `rows`"
+
+	1 to: self height do: [ :i | aBlock value: (self atRow: i) ]
 ]
 
 { #category : #private }

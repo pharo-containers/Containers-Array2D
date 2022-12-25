@@ -229,11 +229,7 @@ CTArray2DTest >> testPrinting [
 
 	self 
 		assert: self classUnderTest width2Height3 printString
-		equals: '(
-1 2
-3 4
-5 6
-)'
+		equals: 'CTArray2D fromArray: #(1 2 3 4 5 6) width: 2'
 ]
 
 { #category : #'tests-enumeration' }
