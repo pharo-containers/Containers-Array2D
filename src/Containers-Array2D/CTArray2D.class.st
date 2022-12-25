@@ -404,6 +404,7 @@ CTArray2D >> rowsAndColumnsPut: aTwoArgumentBlock [
 			contents
 				at: (self indexX: col y: row)
 				put: (aTwoArgumentBlock value: row value: col) ] ]
+]
 
 { #category : #enumerating }
 CTArray2D >> rowsDo: aBlock [
