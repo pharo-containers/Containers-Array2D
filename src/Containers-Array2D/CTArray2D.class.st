@@ -406,7 +406,7 @@ CTArray2D >> rowsAndColumnsPut: aTwoArgumentBlock [
 				put: (aTwoArgumentBlock value: row value: col) ] ]
 ]
 
-{ #category : #enumerating }
+{ #category : #enumeration }
 CTArray2D >> rowsDo: aBlock [
 	"Iterate on each row. See also `atRow:` and `rows`"
 
