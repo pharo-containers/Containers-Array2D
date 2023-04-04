@@ -224,6 +224,17 @@ CTArray2DTest >> testIndexXY [
 	self assert: (foo indexX: 2 y: 3) equals: (3-1)*(foo width)+2 
 ]
 
+{ #category : #tests }
+CTArray2DTest >> testLeftToRightFromBottomToTopDo [
+
+	| a2d res |
+	a2d := CTArray2D fromArray: #(1 2 3 4 5 6) width: 3.
+	res := OrderedCollection new. 
+	a2d leftToRightFromBottomToTopDo: [ :each | res add: each ].
+	self assert: res equals: #(4 5 6 1 2 3 ) asOrderedCollection
+	 
+]
+
 { #category : #'tests-printing' }
 CTArray2DTest >> testPrinting [
 

@@ -314,6 +314,20 @@ CTArray2D >> isSelfEvaluating [
 	^ self class == CTArray2D and: [ contents isSelfEvaluating ]
 ]
 
+{ #category : #'accessing - compatibility' }
+CTArray2D >> numberOfColumns [
+    "Answer the receiver's width, i.e., its number of x"
+
+	^ self width
+]
+
+{ #category : #'accessing - compatibility' }
+CTArray2D >> numberOfRows [
+    "Answer the receiver's height, i.e., its number of row/lines or y."
+
+	^ self height
+]
+
 { #category : #copying }
 CTArray2D >> postCopy [
 	super postCopy. 
@@ -390,6 +404,7 @@ CTArray2D >> rows [
 
 { #category : #enumeration }
 CTArray2D >> rowsAndColumnsDo: aBlock [
+	"rows iteration implies from top to bottom and row elements first, column by column"
 	1 to: self width do: [:col |
 		1 to: self height do: [:row |
 			aBlock value: row value: col]]
@@ -429,6 +444,13 @@ CTArray2D >> setWidth: aSize [
 { #category : #accessing }
 CTArray2D >> size [
 	^ contents size
+]
+
+{ #category : #enumeration }
+CTArray2D >> topDownDo: aBlock [
+	"Iterate with X varying most quickly."
+
+	contents do: aBlock
 ]
 
 { #category : #accessing }
