@@ -77,6 +77,19 @@ CTNewArray2DXAndY >> atY: y put: aCollection [
 	^ aCollection
 ]
 
+{ #category : #inspector }
+CTNewArray2DXAndY >> printGridOn: aStream [
+
+	"A raw grid-like representation"
+
+	1 to: self height
+		do: [ :y | 
+				(self atY: y) 
+					do: [ :each | each printOn: aStream ] 
+					separatedBy: [ aStream space ].
+					aStream cr ].
+]
+
 { #category : #accessing }
 CTNewArray2DXAndY >> printXOn: aStream [
 

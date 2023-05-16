@@ -82,6 +82,19 @@ CTNewArray2DRowsAndColumns >> printColumnsOn: aStream [
 ]
 
 { #category : #inspector }
+CTNewArray2DRowsAndColumns >> printGridOn: aStream [
+
+	"A raw grid-like representation"
+
+	1 to: self height 
+		do: [ :r | 
+				(self atRow: r) 
+					do: [ :each | each printOn: aStream ] 
+					separatedBy: [ aStream space ].
+					aStream cr ].
+]
+
+{ #category : #inspector }
 CTNewArray2DRowsAndColumns >> printRowsOn: aStream [
 
 	self rowsDo: [ :row | 
