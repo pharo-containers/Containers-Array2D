@@ -1,3 +1,14 @@
+"
+A simple 2D-Array implementation that is growing down. Therefore the first row is on the top.
+
+This class has 2 APIs available:
+	- One using Columns and Rows (Default)
+	- One using X and Y 
+	
+
+
+
+"
 Class {
 	#name : #CTNewArray2D,
 	#superclass : #Object,
@@ -11,7 +22,7 @@ Class {
 
 { #category : #geometry }
 CTNewArray2D class >> extent: aPoint [
-	^ self withColumns:  aPoint x andRows: aPoint y
+	^ self withColumnSize:  aPoint x andRowSize: aPoint y
 ]
 
 { #category : #'instance creation' }
@@ -31,13 +42,13 @@ CTNewArray2D class >> width: width heigth: height [
 ]
 
 { #category : #'as yet unclassified' }
-CTNewArray2D class >> withColumns: width andRows: height [
+CTNewArray2D class >> withColumnSize: width andRowSize: height [
 	^ CTNewArray2DRowsAndColumns basicNew width: width height: height type: Array
 ]
 
 { #category : #geometry }
 CTNewArray2D class >> withColumnsAndRowsExtent: aPoint [
-	^ self withColumns:  aPoint x andRows: aPoint y
+	^ self withColumnSize:  aPoint x andRowSize: aPoint y
 ]
 
 { #category : #'instance creation' }
@@ -51,14 +62,9 @@ CTNewArray2D class >> withColumnsAndRowsFromArray: aCollection width: aSize [
 	
 ]
 
-{ #category : #'instance creation' }
-CTNewArray2D class >> withX: width andY: height [
-	^ CTNewArray2DXAndY basicNew width: width height: height type: Array
-]
-
 { #category : #geometry }
 CTNewArray2D class >> withXAndYExtent: aPoint [
-	^ self withX: aPoint x andY: aPoint y
+	^ self withXSize: aPoint x andYSize: aPoint y
 ]
 
 { #category : #'instance creation' }
@@ -70,6 +76,23 @@ CTNewArray2D class >> withXAndYFromArray: aCollection width: aSize [
 	^ CTNewArray2DXAndY basicNew setWidth: aSize; setContents: aCollection 
 
 	
+]
+
+{ #category : #'instance creation' }
+CTNewArray2D class >> withXSize: width andYSize: height [
+	^ CTNewArray2DXAndY basicNew width: width height: height type: Array
+]
+
+{ #category : #comparing }
+CTNewArray2D >> = aNewArray2D [
+	"Two array2D are equal if
+	 (a) they are the same 'kind' of thing.
+	 (b) they have the same dimensions (only check width in fact).
+	 (c) the contents are ="
+
+	(aNewArray2D isKindOf: CTNewArray2D) ifFalse: [^false].
+	self width = aNewArray2D width ifFalse: [^false].
+	^ contents = aNewArray2D contents.
 ]
 
 { #category : #converting }
@@ -245,7 +268,7 @@ CTNewArray2D >> height [
 	^ height ifNil: [ height:= contents size // width ]
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 CTNewArray2D >> indexOfX: x y: y [
 	"Answer the receiver coordonnate in 1D, for example:
 	  foo := #( 0 2 4
@@ -280,13 +303,18 @@ CTNewArray2D >> inspectionRows [
 { #category : #inspector }
 CTNewArray2D >> isSelfEvaluating [
 
-	^ self class == CTNewArray2D and: [ contents isSelfEvaluating ]
+	^ SubclassResponsibility
 ]
 
 { #category : #inspector }
 CTNewArray2D >> postCopy [
 	super postCopy. 
 	self setContents: contents copy
+]
+
+{ #category : #printing }
+CTNewArray2D >> printGridOn: aStream [
+	^ SubclassResponsibility 
 ]
 
 { #category : #inspector }
@@ -316,15 +344,7 @@ CTNewArray2D >> printOn: aStream [
 	aStream nextPutAll: ')'.
 ]
 
-{ #category : #inspector }
-CTNewArray2D >> printRowsOn: aStream [
-
-	self rowsDo: [ :row | 
-		row printOn: aStream.
-		aStream cr ]
-]
-
-{ #category : #inspector }
+{ #category : #private }
 CTNewArray2D >> setContents: aCollection [
 	"set the content of the array with aCollection"
 	contents := aCollection
@@ -358,7 +378,7 @@ CTNewArray2D >> width [
 	^ width
 ]
 
-{ #category : #'instance creation' }
+{ #category : #private }
 CTNewArray2D >> width: x height: y type: collectionClass [
 	"Set the number of elements in the first and second dimension.
 	collectionClass can be Array or String or ByteArray but shouldn't be initialized."

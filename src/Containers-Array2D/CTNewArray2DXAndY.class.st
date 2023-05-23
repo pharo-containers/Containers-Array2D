@@ -78,6 +78,12 @@ CTNewArray2DXAndY >> atY: y put: aCollection [
 ]
 
 { #category : #inspector }
+CTNewArray2DXAndY >> isSelfEvaluating [
+
+	^ self class == CTNewArray2DXAndY and: [ contents isSelfEvaluating ]
+]
+
+{ #category : #inspector }
 CTNewArray2DXAndY >> printGridOn: aStream [
 
 	"A raw grid-like representation"

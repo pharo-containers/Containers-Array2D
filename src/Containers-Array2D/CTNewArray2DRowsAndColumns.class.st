@@ -5,53 +5,53 @@ Class {
 }
 
 { #category : #accessing }
-CTNewArray2DRowsAndColumns >> atColumn: x [
-	"Answer the content of the whole column at index x"
+CTNewArray2DRowsAndColumns >> atColumn: columnIndex [
+	"Answer the content of the whole column at columnIndex"
 
 	| column |
 	column := contents class new: self height.
-	1 to: self height do: [ :index | column at: index put: (self atColumn: x atRow: index) ].
+	1 to: self height do: [ :index | column at: index put: (self atColumn: columnIndex atRow: index) ].
 	^ column
 ]
 
 { #category : #accessing }
-CTNewArray2DRowsAndColumns >> atColumn: x atRow: y [
-	"Answer the element at index x, y."
+CTNewArray2DRowsAndColumns >> atColumn: columnIndex atRow: rowIndex [
+	"Answer the element at columnIndex, rowIndex."
 
-	^ contents at: (self indexOfX: x y: y)
+	^ contents at: (self indexOfX: columnIndex y: rowIndex )
 ]
 
 { #category : #accessing }
-CTNewArray2DRowsAndColumns >> atColumn: x atRow: y put: value [
-	"Store a value at index x,y and answer it."
+CTNewArray2DRowsAndColumns >> atColumn: columnIndex atRow: rowIndex put: value [
+	"Store a value at columnIndex,rowIndex and answer it."
 
-	^ contents at: (self indexOfX: x y: y) put: value
+	^ contents at: (self indexOfX: columnIndex y: rowIndex) put: value
 ]
 
 { #category : #accessing }
-CTNewArray2DRowsAndColumns >> atColumn: x put: aCollection [
+CTNewArray2DRowsAndColumns >> atColumn: columnIndex put: aCollection [
 	"Put in a whole column."
 
 	aCollection size = self height ifFalse: [self error: 'wrong column size'].
-	aCollection doWithIndex: [:value :y | self atColumn: x atRow: y put: value].
+	aCollection doWithIndex: [:value :rowIndex | self atColumn: columnIndex atRow: rowIndex put: value].
 	^ aCollection
 ]
 
 { #category : #accessing }
-CTNewArray2DRowsAndColumns >> atRow: y [
-	"Answer the content of the whole column at y"
+CTNewArray2DRowsAndColumns >> atRow: rowIndex [
+	"Answer the content of the whole row at rowIndex"
 
-	(y < 1 or: [ y > self height ])
-		ifTrue: [ self errorSubscriptBounds: y ].
-	^ contents copyFrom: (y - 1) * width + 1 to: y * width
+	(rowIndex < 1 or: [ rowIndex > self height ])
+		ifTrue: [ self errorSubscriptBounds: rowIndex ].
+	^ contents copyFrom: (rowIndex - 1) * width + 1 to: rowIndex * width
 ]
 
 { #category : #accessing }
-CTNewArray2DRowsAndColumns >> atRow: y put: aCollection [
+CTNewArray2DRowsAndColumns >> atRow: rowIndex put: aCollection [
 	"Put in a whole row."
 
 	aCollection size = self width ifFalse: [self error: 'wrong row size'].
-	aCollection doWithIndex: [:value :x | self atColumn: x atRow: y put: value].
+	aCollection doWithIndex: [:value :columnIndex | self atColumn: columnIndex atRow: rowIndex put: value].
 	^ aCollection
 ]
 
@@ -71,6 +71,12 @@ CTNewArray2DRowsAndColumns >> columnsDo: aBlock [
 	"Iterate on each column. See also `atColumns:` and `columns`"
 
 	1 to: self width do: [ :i | aBlock value: (self atColumn: i) ]
+]
+
+{ #category : #inspector }
+CTNewArray2DRowsAndColumns >> isSelfEvaluating [
+
+	^ self class == CTNewArray2DRowsAndColumns and: [ contents isSelfEvaluating ]
 ]
 
 { #category : #inspector }
