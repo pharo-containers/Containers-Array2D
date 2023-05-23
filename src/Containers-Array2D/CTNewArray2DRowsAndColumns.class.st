@@ -4,6 +4,12 @@ Class {
 	#category : #'Containers-Array2D'
 }
 
+{ #category : #'instance creation' }
+CTNewArray2DRowsAndColumns class >> new [
+
+	^ self basicNew
+]
+
 { #category : #accessing }
 CTNewArray2DRowsAndColumns >> atColumn: columnIndex [
 	"Answer the content of the whole column at columnIndex"

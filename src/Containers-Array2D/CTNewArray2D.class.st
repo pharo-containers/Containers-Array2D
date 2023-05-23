@@ -36,7 +36,13 @@ CTNewArray2D class >> fromArray: aCollection width: aSize [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
+CTNewArray2D class >> new [
+
+	^ self basicNew
+]
+
+{ #category : #'instance creation' }
 CTNewArray2D class >> width: width heigth: height [
 	^ CTNewArray2DRowsAndColumns basicNew width: width height: height type: Array
 ]
@@ -120,15 +126,6 @@ CTNewArray2D >> atAllPut: anObject [
 	"Put anObject at every one of the receiver's indices."
 
 	contents atAllPut: anObject
-]
-
-{ #category : #inspector }
-CTNewArray2D >> basicPrintOnInspector [
-	<inspectorPresentationOrder: 35 title: 'Array2D'>
-
-	^ SpTextPresenter new 
-		text: self printString;
-		yourself
 ]
 
 { #category : #accessing }
@@ -265,7 +262,7 @@ CTNewArray2D >> hash [
 { #category : #accessing }
 CTNewArray2D >> height [ 
 	
-	^ height ifNil: [ height:= contents size // width ]
+	^ height ifNil: [ height := contents size // width ]
 ]
 
 { #category : #private }
@@ -279,25 +276,6 @@ CTNewArray2D >> indexOfX: x y: y [
 	(x < 1 or: [ x > width ])
 		ifTrue: [ self errorSubscriptBounds: x ].
 	^ (y - 1) * width + x
-]
-
-{ #category : #inspector }
-CTNewArray2D >> inpectionGrid [
-	<inspectorPresentationOrder: 35 title: 'Column/Row'>
-
-	^ SpTextPresenter new 
-		text: (String streamContents: [ :aStream | self printGridOn: aStream ]);
-		yourself
-
-]
-
-{ #category : #inspector }
-CTNewArray2D >> inspectionRows [
-	<inspectorPresentationOrder: 35 title: 'Rows'>
-
-	^ SpTextPresenter new 
-		text: (String streamContents: [ :aStream | self printRowsOn: aStream ]);
-		yourself
 ]
 
 { #category : #inspector }
@@ -322,9 +300,9 @@ CTNewArray2D >> printOn: aStream [
 
 	"Self evaluating representation is prefered"
 	
-	"(CTArray2D fromArray: #(1 2 3 4 5 6) width: 2) printString >>> 'CTArray2D fromArray: #(1 2 3 4 5 6) width: 2'"
+	"(CTNewArray2D fromArray: #(1 2 3 4 5 6) width: 2) printString >>> 'CTNewArray2D fromArray: #(1 2 3 4 5 6) width: 2'"
 
-	"(CTArray2D fromArray: 'abcdef' width: 3) printString >>> 'CTArray2D fromArray: ''abcdef'' width: 3'"
+	"(CTNewArray2D fromArray: 'abcdef' width: 3) printString >>> 'CTNewArray2D fromArray: ''abcdef'' width: 3'"
 
 	self isSelfEvaluating ifTrue: [
 		aStream
