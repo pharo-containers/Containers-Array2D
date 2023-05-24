@@ -4,6 +4,11 @@ Class {
 	#category : #'Containers-Array2D'
 }
 
+{ #category : #'instance creation' }
+CTNewArray2DXAndY class >> width: width height: height [
+	^ CTNewArray2DXAndY basicNew width: width height: height type: Array
+]
+
 { #category : #accessing }
 CTNewArray2DXAndY >> arrayOfX [
 

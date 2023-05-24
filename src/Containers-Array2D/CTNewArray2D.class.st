@@ -42,9 +42,38 @@ CTNewArray2D class >> new [
 	^ self basicNew
 ]
 
+{ #category : #examples }
+CTNewArray2D class >> width2Height3 [
+	<sampleInstance>
+	"self width2Height3"
+	| i |
+	i := self width: 2 height: 3.
+	i at: 1@1 put: 1.
+	i at: 2@1 put: 2.
+	i at: 1@2 put: 3.
+	i at: 2@2 put: 4.
+	i at: 1@3 put: 5.
+	i at: 2@3 put: 6.
+	^ i
+]
+
 { #category : #'instance creation' }
-CTNewArray2D class >> width: width heigth: height [
+CTNewArray2D class >> width: width height: height [
 	^ CTNewArray2DRowsAndColumns basicNew width: width height: height type: Array
+]
+
+{ #category : #'instance creation' }
+CTNewArray2D class >> width: width height: height tabulate: aTwoArgumentBlock [
+
+	"Answer a new CTNewArray2D of the given dimensions where
+	 result at: x @ y is aTwoArgumentBlock value: x value: y"
+
+	| newArray |
+	newArray := self basicNew width: width height: height type: Array.
+	1 to: newArray height do: [ :rowIndex | 
+		1 to: newArray width do: [ :columnIndex | 
+			newArray at: columnIndex @ rowIndex put: (aTwoArgumentBlock value: columnIndex value: rowIndex) ] ].
+	^ newArray
 ]
 
 { #category : #'as yet unclassified' }
@@ -134,11 +163,28 @@ CTNewArray2D >> contents [
 	^ contents
 ]
 
+{ #category : #enumerating }
+CTNewArray2D >> do: aBlock [
+	"Iterate with X varying most quickly."
+
+	contents do: aBlock
+]
+
 { #category : #accessing }
 CTNewArray2D >> extent [
 	"Answer the receiver's dimensions as point."
 
 	^ self width @ self height
+]
+
+{ #category : #accessing }
+CTNewArray2D >> extent: extent fromArray: anArray [
+	"Extent the receiver to anArray size and load it with anArray contents "
+
+	extent x * extent y = anArray size
+		ifFalse: [ ^ self error: 'dimensions don''t match' ].
+	width := extent x.
+	contents := anArray
 ]
 
 { #category : #enumerating }
@@ -262,7 +308,7 @@ CTNewArray2D >> hash [
 { #category : #accessing }
 CTNewArray2D >> height [ 
 	
-	^ height ifNil: [ height := contents size // width ]
+	^ contents size // width
 ]
 
 { #category : #private }
@@ -273,7 +319,7 @@ CTNewArray2D >> indexOfX: x y: y [
 		foo indexOfX: 3 y: 1 gives us the index of the value '4' which is the 3rd value of the array in 1D"
 					
 					
-	(x < 1 or: [ x > width ])
+	(x < 1 or: [ x > width ]) | (y < 1 or: [ y > self height ])
 		ifTrue: [ self errorSubscriptBounds: x ].
 	^ (y - 1) * width + x
 ]
@@ -332,16 +378,14 @@ CTNewArray2D >> setContents: aCollection [
 CTNewArray2D >> setHeight: aSize [
 	"Set the height of the receiver. It should be in sync with the size of the internal array used to store the contents, i.e., contents size \\ aSize should always be zero."
 	
-	height := aSize.
-	width := contents size // height 
+	self setWidth: contents size // aSize 
 ]
 
 { #category : #inspector }
 CTNewArray2D >> setWidth: aSize [
 	"Set the width of the receiver. It should be in sync with the size of the internal array used to store the contents, i.e., contents size \\ aSize should always be zero."
 	
-	width := aSize.
-	height := contents size // width 
+	width := aSize
 ]
 
 { #category : #accessing }
@@ -367,4 +411,30 @@ CTNewArray2D >> width: x height: y type: collectionClass [
 	"later move all the elements to the new sized array"
 	width := x.
 	contents := collectionClass new: x * y
+]
+
+{ #category : #'as yet unclassified' }
+CTNewArray2D >> withIndexes: aBinaryBlock [
+
+	^ self withIndexesDo: [ :columnIndex :rowIndex :item |
+		  aBinaryBlock value: columnIndex value: rowIndex ]
+]
+
+{ #category : #'as yet unclassified' }
+CTNewArray2D >> withIndexesDo: aThreeParametersBlock [
+
+	1 to: self height do: [ :rowIndex |
+		1 to: self width do: [ :columnIndex |
+			aThreeParametersBlock value: columnIndex value: rowIndex value: (self at: columnIndex @ rowIndex ) ] ]
+]
+
+{ #category : #'as yet unclassified' }
+CTNewArray2D >> withIndexesPut: aTwoArgumentBlock [
+	"Set the value at col,row as the value of aTwoArgumentBlock with row and column as inputs."
+
+	1 to: self height do: [ :rowIndex | 
+		1 to: self width do: [ :columnIndex | 
+			contents
+				at: (self indexOfX: columnIndex y: rowIndex)
+				put: (aTwoArgumentBlock value: columnIndex value: rowIndex) ] ]
 ]
