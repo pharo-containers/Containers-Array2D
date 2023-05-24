@@ -100,6 +100,78 @@ CTNewArray2DTest >> testFromArray [
 ]
 
 { #category : #tests }
+CTNewArray2DTest >> testFromBottomToTopFromLeftToRightDo [
+	|foo res|
+	foo := self arrayClass width2Height3.
+	res := OrderedCollection new.
+	foo fromBottomToTopFromLeftToRightDo: [ :each | res add: each ].
+	self assert: res equals: #(5 3 1 6 4 2) asOrderedCollection
+]
+
+{ #category : #tests }
+CTNewArray2DTest >> testFromBottomToTopFromRightToLeftDo [
+	|foo res|
+	foo := self arrayClass width2Height3.
+	res := OrderedCollection new.
+	foo fromBottomToTopFromRightToLeftDo: [ :each | res add: each ].
+	self assert: res equals: #(6 4 2 5 3 1) asOrderedCollection
+]
+
+{ #category : #tests }
+CTNewArray2DTest >> testFromLeftToRightFromBottomToTopDo [
+	|foo res|
+	foo := self arrayClass width2Height3.
+	res := OrderedCollection new.
+	foo fromLeftToRightFromBottomToTopDo: [ :each | res add: each ].
+	self assert: res equals: #(5 6 3 4 1 2) asOrderedCollection
+]
+
+{ #category : #tests }
+CTNewArray2DTest >> testFromLeftToRightFromTopToBottomDo [
+	|foo res|
+	foo := self arrayClass width2Height3.
+	res := OrderedCollection new.
+	foo fromLeftToRightFromTopToBottomDo: [ :each | res add: each ].
+	self assert: res equals: #(1 2 3 4 5 6) asOrderedCollection
+]
+
+{ #category : #tests }
+CTNewArray2DTest >> testFromRightToLeftFromBottomToTopDo [
+	|foo res|
+	foo := self arrayClass width2Height3.
+	res := OrderedCollection new.
+	foo fromRightToLeftFromBottomToTopDo: [ :each | res add: each ].
+	self assert: res equals: #(6 5 4 3 2 1) asOrderedCollection
+]
+
+{ #category : #tests }
+CTNewArray2DTest >> testFromRightToLeftFromTopToBottomDo [
+	|foo res|
+	foo := self arrayClass width2Height3.
+	res := OrderedCollection new.
+	foo fromRightToLeftFromTopToBottomDo: [ :each | res add: each ].
+	self assert: res equals: #(2 1 4 3 6 5) asOrderedCollection
+]
+
+{ #category : #tests }
+CTNewArray2DTest >> testFromTopToBottomFromLeftToRightDo [
+	|foo res|
+	foo := self arrayClass width2Height3.
+	res := OrderedCollection new.
+	foo fromTopToBottomFromLeftToRightDo: [ :each | res add: each ].
+	self assert: res equals: #(1 3 5 2 4 6) asOrderedCollection
+]
+
+{ #category : #tests }
+CTNewArray2DTest >> testFromTopToBottomFromRightToLeftDo [
+	|foo res|
+	foo := self arrayClass width2Height3.
+	res := OrderedCollection new.
+	foo fromTopToBottomFromRightToLeftDo: [ :each | res add: each ].
+	self assert: res equals: #(2 4 6 1 3 5) asOrderedCollection
+]
+
+{ #category : #tests }
 CTNewArray2DTest >> testHeight [
 
 	self assert: (self arrayClass width2Height3) height equals: 3.

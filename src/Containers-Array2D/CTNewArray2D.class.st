@@ -238,8 +238,8 @@ CTNewArray2D >> fromLeftToRightFromTopToBottomDo: aBlock [
 	123456
 	"
 	
-	  1 to: self height do: [:col |
-		1 to: self width do: [:row |
+	  1 to: self height do: [:row |
+		1 to: self width do: [:col |
 			aBlock  value: (self at: col@row)]]
 ]
 
@@ -266,8 +266,8 @@ CTNewArray2D >> fromRightToLeftFromTopToBottomDo: aBlock [
 	321654
 	"
 	
-	  1 to: self height do: [:col |
-		self width to: 1 by: -1 do: [:row |
+	  1 to: self height do: [:row |
+		self width to: 1 by: -1 do: [:col |
 			aBlock  value: (self at: col@row)]]
 ]
 
