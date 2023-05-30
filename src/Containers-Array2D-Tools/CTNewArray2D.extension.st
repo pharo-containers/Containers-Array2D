@@ -10,7 +10,7 @@ CTNewArray2D >> basicPrintOnInspector [
 ]
 
 { #category : #'*Containers-Array2D-Tools' }
-CTNewArray2D >> inpectionGrid [
+CTNewArray2D >> inspectionGrid [
 	<inspectorPresentationOrder: 35 title: 'Column/Row'>
 
 	^ SpTextPresenter new 

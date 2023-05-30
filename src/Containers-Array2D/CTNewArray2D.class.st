@@ -14,7 +14,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'width',
-		'height',
 		'contents'
 	],
 	#category : #'Containers-Array2D'
