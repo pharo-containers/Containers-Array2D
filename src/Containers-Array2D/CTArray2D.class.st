@@ -224,15 +224,6 @@ CTArray2D >> atX: x atY: y put: value [
 	^ contents at: (self indexX: x y: y) put: value
 ]
 
-{ #category : #inspector }
-CTArray2D >> basicPrintOnInspector [
-	<inspectorPresentationOrder: 35 title: 'Array2D'>
-
-	^ SpTextPresenter new 
-		text: self printString;
-		yourself
-]
-
 { #category : #private }
 CTArray2D >> contents [
 
@@ -287,25 +278,6 @@ CTArray2D >> indexX: x y: y [
 	(x < 1 or: [ x > width ])
 		ifTrue: [ self errorSubscriptBounds: x ].
 	^ (y - 1) * width + x
-]
-
-{ #category : #inspector }
-CTArray2D >> inpectionGrid [
-	<inspectorPresentationOrder: 35 title: 'Column/Row'>
-
-	^ SpTextPresenter new 
-		text: (String streamContents: [ :aStream | self printGridOn: aStream ]);
-		yourself
-
-]
-
-{ #category : #inspector }
-CTArray2D >> inspectionRows [
-	<inspectorPresentationOrder: 35 title: 'Rows'>
-
-	^ SpTextPresenter new 
-		text: (String streamContents: [ :aStream | self printRowsOn: aStream ]);
-		yourself
 ]
 
 { #category : #'self evaluating' }

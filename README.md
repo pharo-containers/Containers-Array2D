@@ -16,7 +16,7 @@ can only load the collection they need without 100 of related collections.
 ```
 Metacello new
   baseline: 'ContainersArray2D';
-  repository: 'github://pharo-containers/Containers-Array2D/src';
+  repository: 'github://Enzo-Demeulenaere/Containers-Array2D/src';
   load.
 ```
 
@@ -25,7 +25,7 @@ Metacello new
 ```
   spec 
     baseline: ''ContainersArray2D' 
-    with: [ spec repository: 'github://pharo-containers/Containers-Array2D/src' ].
+    with: [ spec repository: 'github://Enzo-Demeulenaere/Containers-Array2D/src' ].
   ```
 
 ----
