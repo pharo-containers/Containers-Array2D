@@ -156,6 +156,13 @@ CTNewArray2D >> atAllPut: anObject [
 	contents atAllPut: anObject
 ]
 
+{ #category : #enumerating }
+CTNewArray2D >> collect: aBlock [
+	"Iterate with X varying most quickly."
+
+	^ contents collect: aBlock
+]
+
 { #category : #accessing }
 CTNewArray2D >> contents [
 
