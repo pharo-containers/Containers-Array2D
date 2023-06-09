@@ -63,15 +63,19 @@ CTNewArray2D class >> width: width height: height [
 
 { #category : #'instance creation' }
 CTNewArray2D class >> width: width height: height tabulate: aTwoArgumentBlock [
-
 	"Answer a new CTNewArray2D of the given dimensions where
 	 result at: x @ y is aTwoArgumentBlock value: x value: y"
 
 	| newArray |
-	newArray := self basicNew width: width height: height type: Array.
-	1 to: newArray height do: [ :rowIndex | 
-		1 to: newArray width do: [ :columnIndex | 
-			newArray at: columnIndex @ rowIndex put: (aTwoArgumentBlock value: columnIndex value: rowIndex) ] ].
+	newArray := CTNewArray2DRowsAndColumns basicNew
+		            width: width
+		            height: height
+		            type: Array.
+	1 to: newArray height do: [ :rowIndex |
+		1 to: newArray width do: [ :columnIndex |
+			newArray
+				at: columnIndex @ rowIndex
+				put: (aTwoArgumentBlock value: columnIndex value: rowIndex) ] ].
 	^ newArray
 ]
 
