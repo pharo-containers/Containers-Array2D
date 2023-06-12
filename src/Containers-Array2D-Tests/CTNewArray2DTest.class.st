@@ -46,12 +46,12 @@ CTNewArray2DTest >> testAtPut [
 { #category : #tests }
 CTNewArray2DTest >> testCollect [
 
-	| foo bar |
+	| foo bar newArray|
 	foo := self arrayClass width2Height3.
+	newArray := self arrayClass fromArray: #( 3 4 5 6 7 8 ) width: 2.
+	bar := foo collect: [ :each | each + 2 ].
 
-	bar := foo collect: [ :each | each + 2].
-
-	self assert: bar equals: #(3 4 5 6 7 8)
+	self assert: bar equals: newArray
 ]
 
 { #category : #tests }
