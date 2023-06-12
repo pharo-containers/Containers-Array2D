@@ -378,6 +378,18 @@ CTNewArray2D >> printOn: aStream [
 	aStream nextPutAll: ')'.
 ]
 
+{ #category : #enumerating }
+CTNewArray2D >> reject: aBlock [
+
+	^ contents reject: aBlock
+]
+
+{ #category : #enumerating }
+CTNewArray2D >> select: aBlock [
+
+	^ contents select: aBlock
+]
+
 { #category : #private }
 CTNewArray2D >> setContents: aCollection [
 	"set the content of the array with aCollection"

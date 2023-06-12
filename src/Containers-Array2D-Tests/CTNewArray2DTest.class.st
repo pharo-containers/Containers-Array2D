@@ -44,6 +44,17 @@ CTNewArray2DTest >> testAtPut [
 ]
 
 { #category : #tests }
+CTNewArray2DTest >> testCollect [
+
+	| foo bar |
+	foo := self arrayClass width2Height3.
+
+	bar := foo collect: [ :each | each + 2].
+
+	self assert: bar equals: #(3 4 5 6 7 8)
+]
+
+{ #category : #tests }
 CTNewArray2DTest >> testCopy [
 	| foo cop |
 	foo := self arrayClass width2Height3.
@@ -56,14 +67,20 @@ CTNewArray2DTest >> testCopy [
 
 { #category : #tests }
 CTNewArray2DTest >> testDo [
+
 	| foo nb |
 	foo := self arrayClass width2Height3.
-	nb := 1.
-	
-	foo
-		do: [ :each | 
-			self assert: (each = nb).
-			nb := nb + 1 ].
+	foo atAllPut: 0.
+	foo atColumn: 2 atRow: 2 put: 1.
+	nb := 0.
+
+	"foo looks like that: #( 0 0 
+									0 1
+									0 0 )"
+	foo do: [ :each | each = 0 ifFalse: [ nb := each ] ].
+
+	"nb should be equal to 1"
+	self assert: nb equals: 1
 ]
 
 { #category : #tests }
@@ -191,6 +208,28 @@ CTNewArray2DTest >> testPrinting [
 	self 
 		assert: self arrayClass width2Height3 printString
 		equals: 'CTNewArray2DRowsAndColumns fromArray: #(1 2 3 4 5 6) width: 2'
+]
+
+{ #category : #tests }
+CTNewArray2DTest >> testReject [
+
+	| foo bar |
+	foo := self arrayClass width2Height3.
+
+	bar := foo reject: [ :each | each even ].
+
+	self assert: bar equals: #( 1 3 5 )
+]
+
+{ #category : #tests }
+CTNewArray2DTest >> testSelect [
+
+	| foo bar |
+	foo := self arrayClass width2Height3.
+
+	bar := foo select: [ :each | each even ].
+
+	self assert: bar equals: #( 2 4 6 )
 ]
 
 { #category : #tests }
