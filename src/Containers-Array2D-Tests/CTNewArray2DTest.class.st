@@ -222,6 +222,26 @@ CTNewArray2DTest >> testReject [
 ]
 
 { #category : #tests }
+CTNewArray2DTest >> testRotateLeft [ 
+
+	|foo bar|
+	foo := self arrayClass width2Height3.
+	bar := foo rotateLeft.
+	self assert: bar width equals: 3.
+	self assert: bar asArray equals: #( 2 4 6 1 3 5) asOrderedCollection
+]
+
+{ #category : #tests }
+CTNewArray2DTest >> testRotateRight [
+
+	| foo bar |
+	foo := self arrayClass width2Height3.
+	bar := foo rotateRight.
+	self assert: bar width equals: 3.
+	self assert: bar asArray equals: #( 5 3 1 6 4 2 ) asOrderedCollection
+]
+
+{ #category : #tests }
 CTNewArray2DTest >> testSelect [
 
 	| foo bar |

@@ -385,6 +385,25 @@ CTNewArray2D >> reject: aBlock [
 	^ contents reject: aBlock
 ]
 
+{ #category : #'as yet unclassified' }
+CTNewArray2D >> rotateLeft [ 
+	|tmpArray|
+	tmpArray := OrderedCollection new.
+	
+	self fromTopToBottomFromRightToLeftDo: [ :item | tmpArray add: item ].
+	^ CTNewArray2D fromArray: tmpArray width: self height
+]
+
+{ #category : #'as yet unclassified' }
+CTNewArray2D >> rotateRight [
+
+	| tmpArray |
+	tmpArray := OrderedCollection new.
+
+	self fromBottomToTopFromLeftToRightDo: [ :item | tmpArray add: item ].
+	^ CTNewArray2D fromArray: tmpArray width: self height
+]
+
 { #category : #enumerating }
 CTNewArray2D >> select: aBlock [
 
