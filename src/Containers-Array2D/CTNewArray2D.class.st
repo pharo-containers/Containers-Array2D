@@ -471,6 +471,16 @@ CTNewArray2D >> withIndexesDo: aThreeParametersBlock [
 ]
 
 { #category : #'as yet unclassified' }
+CTNewArray2D >> withIndexesDoPut: aThreeParametersBlock [
+	"array withIndexesDoPut: [ :column :row :each |"
+	
+	self withIndexesPut: [ :column :row | 
+		|each|
+		each := self at: column @ row.
+		aThreeParametersBlock value: column value: row value: each ]
+]
+
+{ #category : #'as yet unclassified' }
 CTNewArray2D >> withIndexesPut: aTwoArgumentBlock [
 	"Set the value at col,row as the value of aTwoArgumentBlock with row and column as inputs."
 

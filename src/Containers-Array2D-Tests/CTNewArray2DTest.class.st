@@ -346,6 +346,15 @@ CTNewArray2DTest >> testWithIndexesDo [
 ]
 
 { #category : #tests }
+CTNewArray2DTest >> testWithIndexesDoPut [
+
+	|array|
+	array := self arrayClass width2Height3.
+	array withIndexesDoPut: [ :column :row :each | (column * 100) + (row * 10) + each ].
+	self assert: array contents equals: #(111 212 123 224 135 236)
+]
+
+{ #category : #tests }
 CTNewArray2DTest >> testwithIndexesPut [
 
 	| foo array |
