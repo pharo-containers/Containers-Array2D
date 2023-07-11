@@ -133,6 +133,12 @@ CTNewArray2D >> = aNewArray2D [
 	^ contents = aNewArray2D contents.
 ]
 
+{ #category : #enumerating }
+CTNewArray2D >> anySatisfy: aBlock [
+
+	^ self contents anySatisfy: [ :each | aBlock value: each ]
+]
+
 { #category : #converting }
 CTNewArray2D >> asArray [
 	"return a copy of the receiver"
