@@ -5,9 +5,14 @@ Class {
 }
 
 { #category : #'tests converting' }
-CTAlternateArray2DTest >> arrayClass [ 
+CTAlternateArray2DTest class >> arrayClass [ 
 
 	^ CTAlternateArray2D
+]
+
+{ #category : #'tests converting' }
+CTAlternateArray2DTest >> arrayClass [
+	^ self class arrayClass
 ]
 
 { #category : #'tests-iterate' }
