@@ -44,6 +44,17 @@ CTNewArray2DTest >> testAtPut [
 ]
 
 { #category : #tests }
+CTNewArray2DTest >> testCollect [
+
+	| foo bar newArray|
+	foo := self arrayClass width2Height3.
+	newArray := self arrayClass fromArray: #( 3 4 5 6 7 8 ) width: 2.
+	bar := foo collect: [ :each | each + 2 ].
+
+	self assert: bar equals: newArray
+]
+
+{ #category : #tests }
 CTNewArray2DTest >> testCopy [
 	| foo cop |
 	foo := self arrayClass width2Height3.
@@ -56,14 +67,20 @@ CTNewArray2DTest >> testCopy [
 
 { #category : #tests }
 CTNewArray2DTest >> testDo [
+
 	| foo nb |
 	foo := self arrayClass width2Height3.
-	nb := 1.
-	
-	foo
-		do: [ :each | 
-			self assert: (each = nb).
-			nb := nb + 1 ].
+	foo atAllPut: 0.
+	foo atColumn: 2 atRow: 2 put: 1.
+	nb := 0.
+
+	"foo looks like that: #( 0 0 
+									0 1
+									0 0 )"
+	foo do: [ :each | each = 0 ifFalse: [ nb := each ] ].
+
+	"nb should be equal to 1"
+	self assert: nb equals: 1
 ]
 
 { #category : #tests }
@@ -194,6 +211,48 @@ CTNewArray2DTest >> testPrinting [
 ]
 
 { #category : #tests }
+CTNewArray2DTest >> testReject [
+
+	| foo bar |
+	foo := self arrayClass width2Height3.
+
+	bar := foo reject: [ :each | each even ].
+
+	self assert: bar equals: #( 1 3 5 )
+]
+
+{ #category : #tests }
+CTNewArray2DTest >> testRotateLeft [ 
+
+	|foo bar|
+	foo := self arrayClass width2Height3.
+	bar := foo rotateLeft.
+	self assert: bar width equals: 3.
+	self assert: bar asArray equals: #( 2 4 6 1 3 5) asOrderedCollection
+]
+
+{ #category : #tests }
+CTNewArray2DTest >> testRotateRight [
+
+	| foo bar |
+	foo := self arrayClass width2Height3.
+	bar := foo rotateRight.
+	self assert: bar width equals: 3.
+	self assert: bar asArray equals: #( 5 3 1 6 4 2 ) asOrderedCollection
+]
+
+{ #category : #tests }
+CTNewArray2DTest >> testSelect [
+
+	| foo bar |
+	foo := self arrayClass width2Height3.
+
+	bar := foo select: [ :each | each even ].
+
+	self assert: bar equals: #( 2 4 6 )
+]
+
+{ #category : #tests }
 CTNewArray2DTest >> testSetContents [
 	| foo |
 	foo := self arrayClass width2Height3.
@@ -284,6 +343,15 @@ CTNewArray2DTest >> testWithIndexesDo [
 			equals: value 
 		 ]
 
+]
+
+{ #category : #tests }
+CTNewArray2DTest >> testWithIndexesDoPut [
+
+	|array|
+	array := self arrayClass width2Height3.
+	array withIndexesDoPut: [ :column :row :each | (column * 100) + (row * 10) + each ].
+	self assert: array contents equals: #(111 212 123 224 135 236)
 ]
 
 { #category : #tests }

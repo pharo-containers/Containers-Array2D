@@ -63,15 +63,19 @@ CTNewArray2D class >> width: width height: height [
 
 { #category : #'instance creation' }
 CTNewArray2D class >> width: width height: height tabulate: aTwoArgumentBlock [
-
 	"Answer a new CTNewArray2D of the given dimensions where
 	 result at: x @ y is aTwoArgumentBlock value: x value: y"
 
 	| newArray |
-	newArray := self basicNew width: width height: height type: Array.
-	1 to: newArray height do: [ :rowIndex | 
-		1 to: newArray width do: [ :columnIndex | 
-			newArray at: columnIndex @ rowIndex put: (aTwoArgumentBlock value: columnIndex value: rowIndex) ] ].
+	newArray := CTNewArray2DRowsAndColumns basicNew
+		            width: width
+		            height: height
+		            type: Array.
+	1 to: newArray height do: [ :rowIndex |
+		1 to: newArray width do: [ :columnIndex |
+			newArray
+				at: columnIndex @ rowIndex
+				put: (aTwoArgumentBlock value: columnIndex value: rowIndex) ] ].
 	^ newArray
 ]
 
@@ -129,6 +133,12 @@ CTNewArray2D >> = aNewArray2D [
 	^ contents = aNewArray2D contents.
 ]
 
+{ #category : #enumerating }
+CTNewArray2D >> anySatisfy: aBlock [
+
+	^ self contents anySatisfy: [ :each | aBlock value: each ]
+]
+
 { #category : #converting }
 CTNewArray2D >> asArray [
 	"return a copy of the receiver"
@@ -154,6 +164,14 @@ CTNewArray2D >> atAllPut: anObject [
 	"Put anObject at every one of the receiver's indices."
 
 	contents atAllPut: anObject
+]
+
+{ #category : #enumerating }
+CTNewArray2D >> collect: aBlock [
+	"Iterate with X varying most quickly."
+	|newArray|
+	newArray := contents collect: aBlock.
+	^ self class fromArray: newArray width: self width
 ]
 
 { #category : #accessing }
@@ -367,6 +385,37 @@ CTNewArray2D >> printOn: aStream [
 	aStream nextPutAll: ')'.
 ]
 
+{ #category : #enumerating }
+CTNewArray2D >> reject: aBlock [
+
+	^ contents reject: aBlock
+]
+
+{ #category : #'as yet unclassified' }
+CTNewArray2D >> rotateLeft [ 
+	|tmpArray|
+	tmpArray := OrderedCollection new.
+	
+	self fromTopToBottomFromRightToLeftDo: [ :item | tmpArray add: item ].
+	^ CTNewArray2D fromArray: tmpArray width: self height
+]
+
+{ #category : #'as yet unclassified' }
+CTNewArray2D >> rotateRight [
+
+	| tmpArray |
+	tmpArray := OrderedCollection new.
+
+	self fromBottomToTopFromLeftToRightDo: [ :item | tmpArray add: item ].
+	^ CTNewArray2D fromArray: tmpArray width: self height
+]
+
+{ #category : #enumerating }
+CTNewArray2D >> select: aBlock [
+
+	^ contents select: aBlock
+]
+
 { #category : #private }
 CTNewArray2D >> setContents: aCollection [
 	"set the content of the array with aCollection"
@@ -425,6 +474,16 @@ CTNewArray2D >> withIndexesDo: aThreeParametersBlock [
 	1 to: self height do: [ :rowIndex |
 		1 to: self width do: [ :columnIndex |
 			aThreeParametersBlock value: columnIndex value: rowIndex value: (self at: columnIndex @ rowIndex ) ] ]
+]
+
+{ #category : #'as yet unclassified' }
+CTNewArray2D >> withIndexesDoPut: aThreeParametersBlock [
+	"array withIndexesDoPut: [ :column :row :each |"
+	
+	self withIndexesPut: [ :column :row | 
+		|each|
+		each := self at: column @ row.
+		aThreeParametersBlock value: column value: row value: each ]
 ]
 
 { #category : #'as yet unclassified' }
