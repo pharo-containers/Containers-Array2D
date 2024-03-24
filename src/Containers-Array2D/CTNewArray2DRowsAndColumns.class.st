@@ -1,16 +1,17 @@
 Class {
-	#name : #CTNewArray2DRowsAndColumns,
-	#superclass : #CTNewArray2D,
-	#category : #'Containers-Array2D'
+	#name : 'CTNewArray2DRowsAndColumns',
+	#superclass : 'CTNewArray2D',
+	#category : 'Containers-Array2D',
+	#package : 'Containers-Array2D'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CTNewArray2DRowsAndColumns class >> new [
 
 	^ self basicNew
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2DRowsAndColumns >> atColumn: columnIndex [
 	"Answer the content of the whole column at columnIndex"
 
@@ -20,21 +21,21 @@ CTNewArray2DRowsAndColumns >> atColumn: columnIndex [
 	^ column
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2DRowsAndColumns >> atColumn: columnIndex atRow: rowIndex [
 	"Answer the element at columnIndex, rowIndex."
 
 	^ contents at: (self indexOfX: columnIndex y: rowIndex )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2DRowsAndColumns >> atColumn: columnIndex atRow: rowIndex put: value [
 	"Store a value at columnIndex,rowIndex and answer it."
 
 	^ contents at: (self indexOfX: columnIndex y: rowIndex) put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2DRowsAndColumns >> atColumn: columnIndex put: aCollection [
 	"Put in a whole column."
 
@@ -43,7 +44,7 @@ CTNewArray2DRowsAndColumns >> atColumn: columnIndex put: aCollection [
 	^ aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2DRowsAndColumns >> atRow: rowIndex [
 	"Answer the content of the whole row at rowIndex"
 
@@ -52,7 +53,7 @@ CTNewArray2DRowsAndColumns >> atRow: rowIndex [
 	^ contents copyFrom: (rowIndex - 1) * width + 1 to: rowIndex * width
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2DRowsAndColumns >> atRow: rowIndex put: aCollection [
 	"Put in a whole row."
 
@@ -61,7 +62,7 @@ CTNewArray2DRowsAndColumns >> atRow: rowIndex put: aCollection [
 	^ aCollection
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CTNewArray2DRowsAndColumns >> columns [
 
 	"Returns an array of columns."
@@ -72,20 +73,20 @@ CTNewArray2DRowsAndColumns >> columns [
 	^ (1 to: self width) collect: [ :columnIndex | self atColumn: columnIndex ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CTNewArray2DRowsAndColumns >> columnsDo: aBlock [
 	"Iterate on each column. See also `atColumns:` and `columns`"
 
 	1 to: self width do: [ :i | aBlock value: (self atColumn: i) ]
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 CTNewArray2DRowsAndColumns >> isSelfEvaluating [
 
 	^ self class == CTNewArray2DRowsAndColumns and: [ contents isSelfEvaluating ]
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 CTNewArray2DRowsAndColumns >> printColumnsOn: aStream [
 
 	self columnsDo: [ :column | 
@@ -93,7 +94,7 @@ CTNewArray2DRowsAndColumns >> printColumnsOn: aStream [
 		aStream cr ]
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 CTNewArray2DRowsAndColumns >> printGridOn: aStream [
 
 	"A raw grid-like representation"
@@ -106,7 +107,7 @@ CTNewArray2DRowsAndColumns >> printGridOn: aStream [
 					aStream cr ].
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 CTNewArray2DRowsAndColumns >> printRowsOn: aStream [
 
 	self rowsDo: [ :row | 
@@ -114,7 +115,7 @@ CTNewArray2DRowsAndColumns >> printRowsOn: aStream [
 		aStream cr ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CTNewArray2DRowsAndColumns >> rows [
 
 	"Returns an array of rows."
@@ -125,7 +126,7 @@ CTNewArray2DRowsAndColumns >> rows [
 	^ (1 to: self height) collect: [ :rowIndex | self atRow: rowIndex ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CTNewArray2DRowsAndColumns >> rowsDo: aBlock [
 	"Iterate on each row. See also `atRow:` and `rows`"
 

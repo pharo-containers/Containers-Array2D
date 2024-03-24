@@ -10,38 +10,45 @@ This class has 2 APIs available:
 
 "
 Class {
-	#name : #CTNewArray2D,
-	#superclass : #Object,
+	#name : 'CTNewArray2D',
+	#superclass : 'Object',
 	#instVars : [
 		'width',
 		'contents'
 	],
-	#category : #'Containers-Array2D'
+	#category : 'Containers-Array2D',
+	#package : 'Containers-Array2D'
 }
 
-{ #category : #geometry }
-CTNewArray2D class >> extent: aPoint [
-	^ self withColumnSize:  aPoint x andRowSize: aPoint y
+{ #category : 'hierarchy - defaults' }
+CTNewArray2D class >> defaultImplementation [
+
+	^ CTNewArray2DRowsAndColumns 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'geometry' }
+CTNewArray2D class >> extent: aPoint [
+	^ self width: aPoint x height:  aPoint y
+]
+
+{ #category : 'instance creation' }
 CTNewArray2D class >> fromArray: aCollection width: aSize [
 	
 	(aCollection size \\ aSize) isZero 
 		ifFalse: [ ^ self error: 'There is a mismatch between the collection size and the supposed sized to the 2D array' ].
 	
-	^ CTNewArray2DRowsAndColumns basicNew setWidth: aSize; setContents: aCollection 
+	^ self defaultImplementation basicNew setWidth: aSize; setContents: aCollection 
 
 	
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CTNewArray2D class >> new [
 
 	^ self basicNew
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 CTNewArray2D class >> width2Height3 [
 	<sampleInstance>
 	"self width2Height3"
@@ -56,21 +63,18 @@ CTNewArray2D class >> width2Height3 [
 	^ i
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CTNewArray2D class >> width: width height: height [
-	^ CTNewArray2DRowsAndColumns basicNew width: width height: height type: Array
+	^ self defaultImplementation basicNew width: width height: height type: Array
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CTNewArray2D class >> width: width height: height tabulate: aTwoArgumentBlock [
 	"Answer a new CTNewArray2D of the given dimensions where
 	 result at: x @ y is aTwoArgumentBlock value: x value: y"
 
 	| newArray |
-	newArray := CTNewArray2DRowsAndColumns basicNew
-		            width: width
-		            height: height
-		            type: Array.
+	newArray := self width: width height: height.
 	1 to: newArray height do: [ :rowIndex |
 		1 to: newArray width do: [ :columnIndex |
 			newArray
@@ -79,17 +83,17 @@ CTNewArray2D class >> width: width height: height tabulate: aTwoArgumentBlock [
 	^ newArray
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'instance creation' }
 CTNewArray2D class >> withColumnSize: width andRowSize: height [
 	^ CTNewArray2DRowsAndColumns basicNew width: width height: height type: Array
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 CTNewArray2D class >> withColumnsAndRowsExtent: aPoint [
 	^ self withColumnSize:  aPoint x andRowSize: aPoint y
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CTNewArray2D class >> withColumnsAndRowsFromArray: aCollection width: aSize [
 	
 	(aCollection size \\ aSize) isZero 
@@ -100,12 +104,12 @@ CTNewArray2D class >> withColumnsAndRowsFromArray: aCollection width: aSize [
 	
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 CTNewArray2D class >> withXAndYExtent: aPoint [
 	^ self withXSize: aPoint x andYSize: aPoint y
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CTNewArray2D class >> withXAndYFromArray: aCollection width: aSize [
 	
 	(aCollection size \\ aSize) isZero 
@@ -116,12 +120,12 @@ CTNewArray2D class >> withXAndYFromArray: aCollection width: aSize [
 	
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CTNewArray2D class >> withXSize: width andYSize: height [
 	^ CTNewArray2DXAndY basicNew width: width height: height type: Array
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CTNewArray2D >> = aNewArray2D [
 	"Two array2D are equal if
 	 (a) they are the same 'kind' of thing.
@@ -133,40 +137,40 @@ CTNewArray2D >> = aNewArray2D [
 	^ contents = aNewArray2D contents.
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CTNewArray2D >> anySatisfy: aBlock [
 
 	^ self contents anySatisfy: [ :each | aBlock value: each ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 CTNewArray2D >> asArray [
 	"return a copy of the receiver"
 	^ contents copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2D >> at: aPoint [
 	"Answer the element at index Point x, Point y."
 
 	^ contents at: (self indexOfX: aPoint x y: aPoint y)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2D >> at: aPoint put: value [
 	"Store a value at index aPoint x, aPoint y and answer it."
 
 	^ contents at: (self indexOfX: aPoint x y: aPoint y) put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2D >> atAllPut: anObject [
 	"Put anObject at every one of the receiver's indices."
 
 	contents atAllPut: anObject
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CTNewArray2D >> collect: aBlock [
 	"Iterate with X varying most quickly."
 	|newArray|
@@ -174,27 +178,27 @@ CTNewArray2D >> collect: aBlock [
 	^ self class fromArray: newArray width: self width
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2D >> contents [
 
 	^ contents
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CTNewArray2D >> do: aBlock [
 	"Iterate with X varying most quickly."
 
 	contents do: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2D >> extent [
 	"Answer the receiver's dimensions as point."
 
 	^ self width @ self height
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2D >> extent: extent fromArray: anArray [
 	"Extent the receiver to anArray size and load it with anArray contents "
 
@@ -204,7 +208,7 @@ CTNewArray2D >> extent: extent fromArray: anArray [
 	contents := anArray
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CTNewArray2D >> fromBottomToTopFromLeftToRightDo: aBlock [
 	"Apply a block to each element following that order bottom to top but from left gto right "
 	"123
@@ -218,7 +222,7 @@ CTNewArray2D >> fromBottomToTopFromLeftToRightDo: aBlock [
 			aBlock  value: (self at: col@row)]]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CTNewArray2D >> fromBottomToTopFromRightToLeftDo: aBlock [
 	"Apply a block to each element following that order bottom to top but from right to left "
 	"123
@@ -232,7 +236,7 @@ CTNewArray2D >> fromBottomToTopFromRightToLeftDo: aBlock [
 			aBlock  value: (self at: col@row)]]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CTNewArray2D >> fromLeftToRightFromBottomToTopDo: aBlock [
 	"Apply a block to each element following that order left to right but from bottom to top"
 	"123
@@ -246,7 +250,7 @@ CTNewArray2D >> fromLeftToRightFromBottomToTopDo: aBlock [
 			aBlock  value: (self at: col@row)]]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CTNewArray2D >> fromLeftToRightFromTopToBottomDo: aBlock [
 	"Apply a block to each element following that order left to right but from top to bottom"
 	"123
@@ -260,7 +264,7 @@ CTNewArray2D >> fromLeftToRightFromTopToBottomDo: aBlock [
 			aBlock  value: (self at: col@row)]]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CTNewArray2D >> fromRightToLeftFromBottomToTopDo: aBlock [
 	"Apply a block to each element following that order right to left but from bottom to top"
 	"123
@@ -274,7 +278,7 @@ CTNewArray2D >> fromRightToLeftFromBottomToTopDo: aBlock [
 			aBlock  value: (self at: col@row)]]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CTNewArray2D >> fromRightToLeftFromTopToBottomDo: aBlock [
 	"Apply a block to each element following that order right to left but from top to bottom"
 	"123
@@ -288,7 +292,7 @@ CTNewArray2D >> fromRightToLeftFromTopToBottomDo: aBlock [
 			aBlock  value: (self at: col@row)]]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CTNewArray2D >> fromTopToBottomFromLeftToRightDo: aBlock [
 	"Apply a block to each element following that order top to bottom but from left to right "
 	"123
@@ -302,7 +306,7 @@ CTNewArray2D >> fromTopToBottomFromLeftToRightDo: aBlock [
 			aBlock  value: (self at: col@row)]]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CTNewArray2D >> fromTopToBottomFromRightToLeftDo: aBlock [
 	"Apply a block to each element following that order top to bottom but from right to left "
 	"123
@@ -316,19 +320,19 @@ CTNewArray2D >> fromTopToBottomFromRightToLeftDo: aBlock [
 			aBlock  value: (self at: col@row)]]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CTNewArray2D >> hash [
 
 	^ contents hash + width
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2D >> height [ 
 	
 	^ contents size // width
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CTNewArray2D >> indexOfX: x y: y [
 	"Answer the receiver coordonnate in 1D, for example:
 	  foo := #( 0 2 4
@@ -341,24 +345,24 @@ CTNewArray2D >> indexOfX: x y: y [
 	^ (y - 1) * width + x
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 CTNewArray2D >> isSelfEvaluating [
 
 	^ SubclassResponsibility
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 CTNewArray2D >> postCopy [
 	super postCopy. 
 	self setContents: contents copy
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CTNewArray2D >> printGridOn: aStream [
 	^ SubclassResponsibility 
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 CTNewArray2D >> printOn: aStream [
 
 	"Self evaluating representation is prefered"
@@ -385,13 +389,13 @@ CTNewArray2D >> printOn: aStream [
 	aStream nextPutAll: ')'.
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CTNewArray2D >> reject: aBlock [
 
 	^ contents reject: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 CTNewArray2D >> rotateLeft [ 
 	|tmpArray|
 	tmpArray := OrderedCollection new.
@@ -400,7 +404,7 @@ CTNewArray2D >> rotateLeft [
 	^ CTNewArray2D fromArray: tmpArray width: self height
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 CTNewArray2D >> rotateRight [
 
 	| tmpArray |
@@ -410,45 +414,45 @@ CTNewArray2D >> rotateRight [
 	^ CTNewArray2D fromArray: tmpArray width: self height
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CTNewArray2D >> select: aBlock [
 
 	^ contents select: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CTNewArray2D >> setContents: aCollection [
 	"set the content of the array with aCollection"
 	contents := aCollection
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 CTNewArray2D >> setHeight: aSize [
 	"Set the height of the receiver. It should be in sync with the size of the internal array used to store the contents, i.e., contents size \\ aSize should always be zero."
 	
 	self setWidth: contents size // aSize 
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 CTNewArray2D >> setWidth: aSize [
 	"Set the width of the receiver. It should be in sync with the size of the internal array used to store the contents, i.e., contents size \\ aSize should always be zero."
 	
 	width := aSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2D >> size [ 
 	^ contents size 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2D >> width [
 	"Answer the receiver's width, i.e., number of columns or x."
 
 	^ width
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CTNewArray2D >> width: x height: y type: collectionClass [
 	"Set the number of elements in the first and second dimension.
 	collectionClass can be Array or String or ByteArray but shouldn't be initialized."
@@ -461,14 +465,14 @@ CTNewArray2D >> width: x height: y type: collectionClass [
 	contents := collectionClass new: x * y
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 CTNewArray2D >> withIndexes: aBinaryBlock [
 
 	^ self withIndexesDo: [ :columnIndex :rowIndex :item |
 		  aBinaryBlock value: columnIndex value: rowIndex ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 CTNewArray2D >> withIndexesDo: aThreeParametersBlock [
 
 	1 to: self height do: [ :rowIndex |
@@ -476,7 +480,7 @@ CTNewArray2D >> withIndexesDo: aThreeParametersBlock [
 			aThreeParametersBlock value: columnIndex value: rowIndex value: (self at: columnIndex @ rowIndex ) ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 CTNewArray2D >> withIndexesDoPut: aThreeParametersBlock [
 	"array withIndexesDoPut: [ :column :row :each |"
 	
@@ -486,7 +490,7 @@ CTNewArray2D >> withIndexesDoPut: aThreeParametersBlock [
 		aThreeParametersBlock value: column value: row value: each ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 CTNewArray2D >> withIndexesPut: aTwoArgumentBlock [
 	"Set the value at col,row as the value of aTwoArgumentBlock with row and column as inputs."
 
