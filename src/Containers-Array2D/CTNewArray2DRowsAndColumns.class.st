@@ -5,10 +5,10 @@ Class {
 	#package : 'Containers-Array2D'
 }
 
-{ #category : 'instance creation' }
-CTNewArray2DRowsAndColumns class >> new [
+{ #category : 'hierarchy - defaults' }
+CTNewArray2DRowsAndColumns class >> defaultImplementation [
 
-	^ self basicNew
+	^ self
 ]
 
 { #category : 'accessing' }
