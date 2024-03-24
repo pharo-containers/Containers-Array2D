@@ -11,7 +11,7 @@ Class {
 		'rows',
 		'dimension'
 	],
-	#category : 'Containers-Array2D'
+	#category : #'Containers-Array2D'
 }
 
 { #category : #examples }
@@ -32,16 +32,23 @@ CTAlternateArray2D class >> width2Height3 [
 { #category : #iterate }
 CTAlternateArray2D >> allPositionsDo: aBlock [
 	"Execute a Block on all the positions (points) of the receiver."
-	self firstPosition pointTo: self dimension do: aBlock
+	|firstPoint lastPoint|
+	firstPoint := self firstPosition.
+	lastPoint := self dimension.
+	(firstPoint x) to: (lastPoint x) do: [ :x |
+		(firstPoint y) to: (lastPoint y) do: [ :y |
+			aBlock value: (x@y)]].
 ]
 
 { #category : #iterate }
 CTAlternateArray2D >> allPositionsWithin: someDistance from: someOrigin [
-	| answer topLeft bottomRight |
+	| answer topLeft bottomRight|
 	answer := OrderedCollection new.
 	topLeft := someOrigin - someDistance max: self firstPosition.
 	bottomRight := someOrigin + someDistance min: self dimension.
-	topLeft pointTo: bottomRight do: [ :each | answer add: each ].
+	(topLeft x) to: (bottomRight x) do: [ :x |
+		(topLeft y) to: (bottomRight y) do: [ :y |
+			answer add: (x@y)]].
 	^ answer
 ]
 
