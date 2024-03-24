@@ -5,9 +5,10 @@ Class {
 	#package : 'Containers-Array2D'
 }
 
-{ #category : 'instance creation' }
-CTNewArray2DXAndY class >> width: width height: height [
-	^ CTNewArray2DXAndY basicNew width: width height: height type: Array
+{ #category : 'hierarchy - defaults' }
+CTNewArray2DXAndY class >> defaultImplementation [
+
+	^ self
 ]
 
 { #category : 'accessing' }
