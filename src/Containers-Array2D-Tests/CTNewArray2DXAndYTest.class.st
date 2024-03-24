@@ -1,37 +1,38 @@
 Class {
-	#name : #CTNewArray2DXAndYTest,
-	#superclass : #CTNewArray2DTest,
-	#category : #'Containers-Array2D-Tests'
+	#name : 'CTNewArray2DXAndYTest',
+	#superclass : 'CTNewArray2DTest',
+	#category : 'Containers-Array2D-Tests',
+	#package : 'Containers-Array2D-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 CTNewArray2DXAndYTest >> arrayClass [
 
 	^ CTNewArray2DXAndY  
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DXAndYTest >> testArrayOfX [ 
 	|foo|
 	foo := self arrayClass width2Height3.
 	self assert: foo arrayOfX equals: #(#(1 3 5) #(2 4 6))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DXAndYTest >> testArrayOfY [ 
 	|foo|
 	foo := self arrayClass width2Height3.
 	self assert: foo arrayOfY equals: #(#(1 2) #(3 4) #(5 6))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DXAndYTest >> testAtX [
 	| foo |
 	foo := self arrayClass width2Height3.
 	self assert: (foo atX: 2) equals: #(2 4 6)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DXAndYTest >> testAtXAtY [
 	
 	| matrix |
@@ -41,7 +42,7 @@ CTNewArray2DXAndYTest >> testAtXAtY [
 	self assert: (matrix atX: 2 atY: 3) equals: 6
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DXAndYTest >> testAtXAtYPut [
 	
 	| foo |
@@ -50,7 +51,7 @@ CTNewArray2DXAndYTest >> testAtXAtYPut [
 	self assert: (foo atX: 1 atY: 1) equals: 12
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DXAndYTest >> testAtXNotInBounds [
 	| foo |
 	foo := self arrayClass width: 3 height: 5.
@@ -58,7 +59,7 @@ CTNewArray2DXAndYTest >> testAtXNotInBounds [
 	self should: [ foo atX: 6 ] raise: SubscriptOutOfBounds
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DXAndYTest >> testAtXPut [
 	| foo |
 	foo := self arrayClass width2Height3.
@@ -66,14 +67,14 @@ CTNewArray2DXAndYTest >> testAtXPut [
 	1 to: foo height do: [ :y | self assert: (foo atX: 2 atY: y) equals: 1 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DXAndYTest >> testAtY [
 	| foo |
 	foo := self arrayClass width2Height3.
 	self assert: (foo atY: 2) equals: #(3 4)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DXAndYTest >> testAtYNotInBounds [
 	| foo |
 	foo := self arrayClass width: 3 height: 5.
@@ -81,7 +82,7 @@ CTNewArray2DXAndYTest >> testAtYNotInBounds [
 	self should: [ foo atY: 6 ] raise: SubscriptOutOfBounds
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DXAndYTest >> testAtYPut [
 	| foo |
 	foo := self arrayClass width2Height3.
@@ -89,7 +90,7 @@ CTNewArray2DXAndYTest >> testAtYPut [
 	1 to: foo width do: [ :x | self assert: (foo atX: x atY: 2) equals: 1 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DXAndYTest >> testPrinting [
 
 	self 
@@ -97,7 +98,7 @@ CTNewArray2DXAndYTest >> testPrinting [
 		equals: 'CTNewArray2DXAndY fromArray: #(1 2 3 4 5 6) width: 2'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DXAndYTest >> testXDo [
 	|foo array yIndex|
 	foo := self arrayClass width2Height3.
@@ -108,7 +109,7 @@ CTNewArray2DXAndYTest >> testXDo [
 	self assert: array equals: #(#(1 3 5) #(2 4 6))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DXAndYTest >> testYDo [
 	|foo array xIndex|
 	foo := self arrayClass width2Height3.

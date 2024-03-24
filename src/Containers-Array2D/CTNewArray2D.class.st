@@ -75,11 +75,7 @@ CTNewArray2D class >> width: width height: height tabulate: aTwoArgumentBlock [
 
 	| newArray |
 	newArray := self width: width height: height.
-	1 to: newArray height do: [ :rowIndex |
-		1 to: newArray width do: [ :columnIndex |
-			newArray
-				at: columnIndex @ rowIndex
-				put: (aTwoArgumentBlock value: columnIndex value: rowIndex) ] ].
+	newArray tabulate: aTwoArgumentBlock.
 	^ newArray
 ]
 
@@ -443,6 +439,17 @@ CTNewArray2D >> setWidth: aSize [
 { #category : 'accessing' }
 CTNewArray2D >> size [ 
 	^ contents size 
+]
+
+{ #category : 'enumerating' }
+CTNewArray2D >> tabulate: aTwoArgumentBlock [
+	"Populate all fields of self, where the field at: x @ y is the result of aTwoArgumentBlock value: x value: y."
+	
+	"(CTNewArray2D width: 2 height: 3 tabulate: [ :x :y | x + (3 * (y - 1)) ]) printString >>> 'CTNewArray2DRowsAndColumns fromArray: #(1 2 3 4 5 6) width: 2'"
+
+	1 to: self height do: [ :y |
+		1 to: self width do: [ :x |
+			self at: x @ y put: (aTwoArgumentBlock value: x value: y) ] ].
 ]
 
 { #category : 'accessing' }

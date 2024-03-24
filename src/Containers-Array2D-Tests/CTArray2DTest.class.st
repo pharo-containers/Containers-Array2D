@@ -1,22 +1,23 @@
 Class {
-	#name : #CTArray2DTest,
-	#superclass : #TestCase,
-	#category : #'Containers-Array2D-Tests'
+	#name : 'CTArray2DTest',
+	#superclass : 'TestCase',
+	#category : 'Containers-Array2D-Tests',
+	#package : 'Containers-Array2D-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 CTArray2DTest >> arrayClass [
 
 	^ CTArray2D
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 CTArray2DTest >> classUnderTest [
 
 	^ CTArray2D
 ]
 
-{ #category : #'tests-converting' }
+{ #category : 'tests-converting' }
 CTArray2DTest >> testAsArray [
 	| foo |
 	foo := self arrayClass width: 3 height: 3.
@@ -24,14 +25,14 @@ CTArray2DTest >> testAsArray [
 	self assert: foo asArray equals: #(0 0 0 0 0 0 0 0 0)
 ]
 
-{ #category : #'tests-converting' }
+{ #category : 'tests-converting' }
 CTArray2DTest >> testAsArray2 [
 	self
 		assert: self arrayClass width2Height3 asArray
 		equals: #(1 2 3 4 5 6)
 ]
 
-{ #category : #'tests-accessing' }
+{ #category : 'tests-accessing' }
 CTArray2DTest >> testAt [
 	
 	self assert: (self arrayClass width2Height3 at: 1@1) equals: 1.
@@ -39,7 +40,7 @@ CTArray2DTest >> testAt [
 	self assert: (self arrayClass width2Height3 at: 2@3) equals: 6
 ]
 
-{ #category : #'tests-accessing' }
+{ #category : 'tests-accessing' }
 CTArray2DTest >> testAtAllPut [
 	| foo |
 	foo := self arrayClass width: 5 height: 20.
@@ -47,7 +48,7 @@ CTArray2DTest >> testAtAllPut [
 	foo do: [ :each | self assert: each equals: 12 ]
 ]
 
-{ #category : #'tests-accessing rows/columns' }
+{ #category : 'tests-accessing rows/columns' }
 CTArray2DTest >> testAtColumn [
 	| foo |
 	foo := self arrayClass width: 3 height: 5.
@@ -55,14 +56,14 @@ CTArray2DTest >> testAtColumn [
 	self assert: (foo atColumn: 2) equals: #(1 2 3 4 5)
 ]
 
-{ #category : #'tests-accessing rows/columns' }
+{ #category : 'tests-accessing rows/columns' }
 CTArray2DTest >> testAtColumnAtRow [
 	self assert: (self arrayClass width2Height3 atColumn: 1 atRow: 1) equals: 1.
 	self assert: (self arrayClass width2Height3 atColumn: 1 atRow: 2) equals: 3.
 	self assert: (self arrayClass width2Height3 atColumn: 2 atRow: 3) equals: 6
 ]
 
-{ #category : #'tests-accessing rows/columns' }
+{ #category : 'tests-accessing rows/columns' }
 CTArray2DTest >> testAtColumnAtRowPut [
 	| foo |
 	foo := self arrayClass width: 5 height: 20.
@@ -70,7 +71,7 @@ CTArray2DTest >> testAtColumnAtRowPut [
 	self assert: (foo atColumn: 1 atRow: 1) equals: 12
 ]
 
-{ #category : #'tests-accessing rows/columns' }
+{ #category : 'tests-accessing rows/columns' }
 CTArray2DTest >> testAtColumnNotInBounds [
 	| foo |
 	foo := self arrayClass width: 3 height: 5.
@@ -78,7 +79,7 @@ CTArray2DTest >> testAtColumnNotInBounds [
 	self should: [ foo atColumn: 6 ] raise: SubscriptOutOfBounds
 ]
 
-{ #category : #'tests-accessing rows/columns' }
+{ #category : 'tests-accessing rows/columns' }
 CTArray2DTest >> testAtColumnPut [
 	| foo |
 	foo := self arrayClass width: 3 height: 5.
@@ -86,7 +87,7 @@ CTArray2DTest >> testAtColumnPut [
 	1 to: foo height do: [ :y | self assert: (foo atColumn: 2 atRow: y) equals: 1 ]
 ]
 
-{ #category : #'tests-accessing' }
+{ #category : 'tests-accessing' }
 CTArray2DTest >> testAtPut [
 	
 	| foo |
@@ -95,7 +96,7 @@ CTArray2DTest >> testAtPut [
 	self assert: (foo atX: 1 atY: 5) equals: 12
 ]
 
-{ #category : #'tests-accessing rows/columns' }
+{ #category : 'tests-accessing rows/columns' }
 CTArray2DTest >> testAtRow [
 	| foo |
 	foo := self arrayClass width: 5 height: 3.
@@ -103,7 +104,7 @@ CTArray2DTest >> testAtRow [
 	self assert: (foo atRow: 2) equals: #(1 2 3 4 5)
 ]
 
-{ #category : #'tests-accessing rows/columns' }
+{ #category : 'tests-accessing rows/columns' }
 CTArray2DTest >> testAtRowPut [
 	| foo |
 	foo := self arrayClass width: 5 height: 3.
@@ -111,7 +112,7 @@ CTArray2DTest >> testAtRowPut [
 	1 to: foo width do: [ :x | self assert: (foo atColumn: x atRow: 2) equals: 1 ]
 ]
 
-{ #category : #'tests-accessing x/y' }
+{ #category : 'tests-accessing x/y' }
 CTArray2DTest >> testAtXAtY [
 	
 	| matrix |
@@ -121,7 +122,7 @@ CTArray2DTest >> testAtXAtY [
 	self assert: (matrix atX: 2 atY: 3) equals: 6
 ]
 
-{ #category : #'tests-accessing x/y' }
+{ #category : 'tests-accessing x/y' }
 CTArray2DTest >> testAtXAtYPut [
 	
 	| foo |
@@ -130,12 +131,12 @@ CTArray2DTest >> testAtXAtYPut [
 	self assert: (foo atX: 1 atY: 1) equals: 12
 ]
 
-{ #category : #'tests-converting' }
+{ #category : 'tests-converting' }
 CTArray2DTest >> testCannotAccessWithWrongCoordinates [
 	self should: [ self arrayClass width2Height3 atColumn: 6 atRow: 1 ] raise: SubscriptOutOfBounds
 ]
 
-{ #category : #'tests-copying' }
+{ #category : 'tests-copying' }
 CTArray2DTest >> testCopy [
 	| foo cop |
 	foo := self arrayClass width: 5 height: 3.
@@ -147,7 +148,7 @@ CTArray2DTest >> testCopy [
 	self deny: cop identicalTo: foo
 ]
 
-{ #category : #'tests-enumeration' }
+{ #category : 'tests-enumeration' }
 CTArray2DTest >> testDo [
 	| foo nb |
 	foo := self arrayClass width: 5 height: 3.
@@ -167,7 +168,7 @@ CTArray2DTest >> testDo [
 	self assert: nb equals: 1
 ]
 
-{ #category : #'tests-enumeration' }
+{ #category : 'tests-enumeration' }
 CTArray2DTest >> testDo2 [
 	| count |
 	count := 0.
@@ -176,13 +177,13 @@ CTArray2DTest >> testDo2 [
 	self assert: count equals: 3
 ]
 
-{ #category : #'tests-accessing' }
+{ #category : 'tests-accessing' }
 CTArray2DTest >> testExtent [
 	
 	self assert: (self arrayClass width: 5 height: 20) extent equals: 5 @ 20
 ]
 
-{ #category : #'tests-private' }
+{ #category : 'tests-private' }
 CTArray2DTest >> testExtentFromArray [
 	| foo |
 	foo := self arrayClass width: 2 height: 2.
@@ -197,7 +198,7 @@ CTArray2DTest >> testExtentFromArray [
 	self assert: (foo atColumn: 3 atRow: 2) equals: 6
 ]
 
-{ #category : #'tests-private' }
+{ #category : 'tests-private' }
 CTArray2DTest >> testFromArray [
 	
 	| a2 |
@@ -210,13 +211,13 @@ CTArray2DTest >> testFromArray [
 	
 ]
 
-{ #category : #'tests-accessing' }
+{ #category : 'tests-accessing' }
 CTArray2DTest >> testHeight [
 
 	self assert: (self arrayClass width: 5 height: 20) height equals: 20.
 ]
 
-{ #category : #'tests-private' }
+{ #category : 'tests-private' }
 CTArray2DTest >> testIndexXY [
 	| foo |
 	foo := self arrayClass width: 5 height: 20.
@@ -224,7 +225,7 @@ CTArray2DTest >> testIndexXY [
 	self assert: (foo indexX: 2 y: 3) equals: (3-1)*(foo width)+2 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTArray2DTest >> testLeftToRightFromBottomToTopDo [
 
 	| a2d res |
@@ -235,7 +236,7 @@ CTArray2DTest >> testLeftToRightFromBottomToTopDo [
 	 
 ]
 
-{ #category : #'tests-printing' }
+{ #category : 'tests-printing' }
 CTArray2DTest >> testPrinting [
 
 	self 
@@ -243,7 +244,7 @@ CTArray2DTest >> testPrinting [
 		equals: 'CTArray2D fromArray: #(1 2 3 4 5 6) width: 2'
 ]
 
-{ #category : #'tests-enumeration' }
+{ #category : 'tests-enumeration' }
 CTArray2DTest >> testRowAndColumnValuesDo [
 	| foo array |
 	array := #(1 2 3 4 5 6).
@@ -255,7 +256,7 @@ CTArray2DTest >> testRowAndColumnValuesDo [
 
 ]
 
-{ #category : #'tests-enumeration' }
+{ #category : 'tests-enumeration' }
 CTArray2DTest >> testRowsAndColumnsDo [
 	| foo array |
 	foo := self arrayClass width2Height3.
@@ -265,7 +266,7 @@ CTArray2DTest >> testRowsAndColumnsDo [
 	foo rowsAndColumnsDo: [ :y :x | self assert: (foo atColumn: x atRow: y) equals: (array at: (y - 1) * 2 + x) ]
 ]
 
-{ #category : #'tests-enumeration' }
+{ #category : 'tests-enumeration' }
 CTArray2DTest >> testRowsAndColumnsPut [
 
 	| foo array |
@@ -280,7 +281,7 @@ CTArray2DTest >> testRowsAndColumnsPut [
 			equals: (array at: y - 1 * 2 + x) ]
 ]
 
-{ #category : #'tests-private' }
+{ #category : 'tests-private' }
 CTArray2DTest >> testSetContents [
 	| foo |
 	foo := self arrayClass width: 2 height: 3.
@@ -290,7 +291,7 @@ CTArray2DTest >> testSetContents [
 	self assert: (foo atRow: 3) equals: #(1 2).
 ]
 
-{ #category : #'tests-private' }
+{ #category : 'tests-private' }
 CTArray2DTest >> testSetWidth [
 	| foo |
 	foo := self arrayClass width: 2 height: 3.
@@ -298,21 +299,21 @@ CTArray2DTest >> testSetWidth [
 	self assert: foo width equals: 3
 ]
 
-{ #category : #'tests-accessing' }
+{ #category : 'tests-accessing' }
 CTArray2DTest >> testSize [
 	| foo |
 	foo := self arrayClass width: 5 height: 20.
 	self assert: foo size equals: foo width * foo height
 ]
 
-{ #category : #'tests-accessing' }
+{ #category : 'tests-accessing' }
 CTArray2DTest >> testWidth [
 
 	self assert: (self arrayClass width: 5 height: 20) width
  equals: 5
 ]
 
-{ #category : #'tests-enumeration' }
+{ #category : 'tests-enumeration' }
 CTArray2DTest >> testWidthHeightTabulate [
 
 	| foo array |
@@ -327,7 +328,7 @@ CTArray2DTest >> testWidthHeightTabulate [
 			equals: (array at: y - 1 * 2 + x) ]
 ]
 
-{ #category : #'tests-private' }
+{ #category : 'tests-private' }
 CTArray2DTest >> testWidthHeightType [
 	| foo |
 	foo := self arrayClass new.

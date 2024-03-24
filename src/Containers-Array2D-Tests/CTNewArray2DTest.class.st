@@ -1,16 +1,17 @@
 Class {
-	#name : #CTNewArray2DTest,
-	#superclass : #TestCase,
-	#category : #'Containers-Array2D-Tests'
+	#name : 'CTNewArray2DTest',
+	#superclass : 'TestCase',
+	#category : 'Containers-Array2D-Tests',
+	#package : 'Containers-Array2D-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 CTNewArray2DTest >> arrayClass [
 
 	^ CTNewArray2D 
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 CTNewArray2DTest >> testAsArray [
 	| foo |
 	foo := self arrayClass width: 3 height: 3.
@@ -18,7 +19,7 @@ CTNewArray2DTest >> testAsArray [
 	self assert: foo asArray equals: #(0 0 0 0 0 0 0 0 0)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 CTNewArray2DTest >> testAt [
 	
 	self assert: (self arrayClass width2Height3 at: 1@1) equals: 1.
@@ -26,7 +27,7 @@ CTNewArray2DTest >> testAt [
 	self assert: (self arrayClass width2Height3 at: 2@3) equals: 6
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 CTNewArray2DTest >> testAtAllPut [
 	| foo |
 	foo := self arrayClass width: 2 height: 3.
@@ -34,7 +35,7 @@ CTNewArray2DTest >> testAtAllPut [
 	foo do: [ :each | self assert: each equals: 12 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testAtPut [
 	
 	| foo |
@@ -43,7 +44,7 @@ CTNewArray2DTest >> testAtPut [
 	self assert: (foo at: 1@3) equals: 12
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testCollect [
 
 	| foo bar newArray|
@@ -54,7 +55,7 @@ CTNewArray2DTest >> testCollect [
 	self assert: bar equals: newArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testCopy [
 	| foo cop |
 	foo := self arrayClass width2Height3.
@@ -65,7 +66,7 @@ CTNewArray2DTest >> testCopy [
 	self deny: cop identicalTo: foo
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testDo [
 
 	| foo nb |
@@ -83,13 +84,13 @@ CTNewArray2DTest >> testDo [
 	self assert: nb equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testExtent [
 	
 	self assert: (self arrayClass width2Height3) extent equals: 2 @ 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testExtentFromArray [
 	| foo |
 	foo := self arrayClass width2Height3 .
@@ -103,7 +104,7 @@ CTNewArray2DTest >> testExtentFromArray [
 	self assert: (foo at: 3 @ 2) equals: 6
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testFromArray [
 	
 	| a2 |
@@ -116,7 +117,7 @@ CTNewArray2DTest >> testFromArray [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testFromBottomToTopFromLeftToRightDo [
 	|foo res|
 	foo := self arrayClass width2Height3.
@@ -125,7 +126,7 @@ CTNewArray2DTest >> testFromBottomToTopFromLeftToRightDo [
 	self assert: res equals: #(5 3 1 6 4 2) asOrderedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testFromBottomToTopFromRightToLeftDo [
 	|foo res|
 	foo := self arrayClass width2Height3.
@@ -134,7 +135,7 @@ CTNewArray2DTest >> testFromBottomToTopFromRightToLeftDo [
 	self assert: res equals: #(6 4 2 5 3 1) asOrderedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testFromLeftToRightFromBottomToTopDo [
 	|foo res|
 	foo := self arrayClass width2Height3.
@@ -143,7 +144,7 @@ CTNewArray2DTest >> testFromLeftToRightFromBottomToTopDo [
 	self assert: res equals: #(5 6 3 4 1 2) asOrderedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testFromLeftToRightFromTopToBottomDo [
 	|foo res|
 	foo := self arrayClass width2Height3.
@@ -152,7 +153,7 @@ CTNewArray2DTest >> testFromLeftToRightFromTopToBottomDo [
 	self assert: res equals: #(1 2 3 4 5 6) asOrderedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testFromRightToLeftFromBottomToTopDo [
 	|foo res|
 	foo := self arrayClass width2Height3.
@@ -161,7 +162,7 @@ CTNewArray2DTest >> testFromRightToLeftFromBottomToTopDo [
 	self assert: res equals: #(6 5 4 3 2 1) asOrderedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testFromRightToLeftFromTopToBottomDo [
 	|foo res|
 	foo := self arrayClass width2Height3.
@@ -170,7 +171,7 @@ CTNewArray2DTest >> testFromRightToLeftFromTopToBottomDo [
 	self assert: res equals: #(2 1 4 3 6 5) asOrderedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testFromTopToBottomFromLeftToRightDo [
 	|foo res|
 	foo := self arrayClass width2Height3.
@@ -179,7 +180,7 @@ CTNewArray2DTest >> testFromTopToBottomFromLeftToRightDo [
 	self assert: res equals: #(1 3 5 2 4 6) asOrderedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testFromTopToBottomFromRightToLeftDo [
 	|foo res|
 	foo := self arrayClass width2Height3.
@@ -188,13 +189,13 @@ CTNewArray2DTest >> testFromTopToBottomFromRightToLeftDo [
 	self assert: res equals: #(2 4 6 1 3 5) asOrderedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testHeight [
 
 	self assert: (self arrayClass width2Height3) height equals: 3.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testIndexOfXY [
 	| foo |
 	foo := self arrayClass width2Height3.
@@ -202,7 +203,7 @@ CTNewArray2DTest >> testIndexOfXY [
 	self assert: (foo indexOfX: 2 y: 3) equals: (3-1)*(foo width)+2 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testPrinting [
 
 	self 
@@ -210,7 +211,7 @@ CTNewArray2DTest >> testPrinting [
 		equals: 'CTNewArray2DRowsAndColumns fromArray: #(1 2 3 4 5 6) width: 2'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testReject [
 
 	| foo bar |
@@ -221,7 +222,7 @@ CTNewArray2DTest >> testReject [
 	self assert: bar equals: #( 1 3 5 )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testRotateLeft [ 
 
 	|foo bar|
@@ -231,7 +232,7 @@ CTNewArray2DTest >> testRotateLeft [
 	self assert: bar asArray equals: #( 2 4 6 1 3 5) asOrderedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testRotateRight [
 
 	| foo bar |
@@ -241,7 +242,7 @@ CTNewArray2DTest >> testRotateRight [
 	self assert: bar asArray equals: #( 5 3 1 6 4 2 ) asOrderedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testSelect [
 
 	| foo bar |
@@ -252,7 +253,7 @@ CTNewArray2DTest >> testSelect [
 	self assert: bar equals: #( 2 4 6 )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testSetContents [
 	| foo |
 	foo := self arrayClass width2Height3.
@@ -265,7 +266,7 @@ CTNewArray2DTest >> testSetContents [
 	self assert: (foo at: 2 @ 3) equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testSetHeight [
 	| foo |
 	foo := self arrayClass width2Height3.
@@ -273,7 +274,7 @@ CTNewArray2DTest >> testSetHeight [
 	self assert: foo height equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testSetWidth [
 	| foo |
 	foo := self arrayClass width2Height3.
@@ -281,21 +282,42 @@ CTNewArray2DTest >> testSetWidth [
 	self assert: foo width equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testSize [
 	| foo |
 	foo := self arrayClass width2Height3.
 	self assert: foo size equals: foo width * foo height
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+CTNewArray2DTest >> testTabulate [
+
+	| foo |
+	foo := self arrayClass width2Height3.
+	
+	foo tabulate: [ :x :y | x + (foo width * (y - 1)) ].
+	self assert: foo asArray equals: #(1 2 3 4 5 6).
+	
+	foo tabulate: [ :x :y | 0 ].
+	self assert: foo asArray equals: #(0 0 0 0 0 0).
+	
+	foo := self arrayClass width: 4 height: 3.
+	
+	foo tabulate: [ :x :y | x + (foo width * (y - 1)) ].
+	self assert: foo asArray equals: #(1 2 3 4 5 6 7 8 9 10 11 12).
+	
+	foo tabulate: [ :x :y | 0 ].
+	self assert: foo asArray equals: #(0 0 0 0 0 0 0 0 0 0 0 0).
+]
+
+{ #category : 'tests' }
 CTNewArray2DTest >> testWidth [
 
 	self assert: (self arrayClass width2Height3) width
  equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testWidthHeightTabulate [
 
 	| foo array |
@@ -310,7 +332,7 @@ CTNewArray2DTest >> testWidthHeightTabulate [
 			equals: (array at: rowIndex - 1 * 2 + columnIndex) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testWidthHeightType [
 	| foo |
 	foo := self arrayClass new.
@@ -320,7 +342,7 @@ CTNewArray2DTest >> testWidthHeightType [
 	foo do: [ :each | self assert: each equals: nil ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testWithIndexes [
 	| foo value|
 	value:= 1.
@@ -333,7 +355,7 @@ CTNewArray2DTest >> testWithIndexes [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testWithIndexesDo [
 	| foo array |
 	array := #(1 2 3 4 5 6).
@@ -345,7 +367,7 @@ CTNewArray2DTest >> testWithIndexesDo [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testWithIndexesDoPut [
 
 	|array|
@@ -354,7 +376,7 @@ CTNewArray2DTest >> testWithIndexesDoPut [
 	self assert: array contents equals: #(111 212 123 224 135 236)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CTNewArray2DTest >> testwithIndexesPut [
 
 	| foo array |
