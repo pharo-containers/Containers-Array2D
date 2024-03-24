@@ -445,7 +445,7 @@ CTNewArray2D >> size [
 CTNewArray2D >> tabulate: aTwoArgumentBlock [
 	"Populate all fields of self, where the field at: x @ y is the result of aTwoArgumentBlock value: x value: y."
 	
-	"(CTNewArray2D width: 2 height: 3 tabulate: [ :x :y | x + (3 * (y - 1)) ]) printString >>> 'CTNewArray2DRowsAndColumns fromArray: #(1 2 3 4 5 6) width: 2'"
+	"(CTNewArray2D width: 2 height: 3) tabulate: [ :x :y | x + (2 * (y - 1)) ] >>> (CTNewArray2D fromArray: #(1 2 3 4 5 6) width: 2)"
 
 	1 to: self height do: [ :y |
 		1 to: self width do: [ :x |
