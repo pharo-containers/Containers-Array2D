@@ -1,15 +1,17 @@
 Class {
-	#name : #CTNewArray2DXAndY,
-	#superclass : #CTNewArray2D,
-	#category : #'Containers-Array2D'
+	#name : 'CTNewArray2DXAndY',
+	#superclass : 'CTNewArray2D',
+	#category : 'Containers-Array2D',
+	#package : 'Containers-Array2D'
 }
 
-{ #category : #'instance creation' }
-CTNewArray2DXAndY class >> width: width height: height [
-	^ CTNewArray2DXAndY basicNew width: width height: height type: Array
+{ #category : 'hierarchy - defaults' }
+CTNewArray2DXAndY class >> defaultImplementation [
+
+	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2DXAndY >> arrayOfX [
 
 	"Returns an array of columns."
@@ -20,7 +22,7 @@ CTNewArray2DXAndY >> arrayOfX [
 	^ (1 to: self width) collect: [ :x | self atX: x ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2DXAndY >> arrayOfY [
 
 	"Returns an array of rows."
@@ -31,7 +33,7 @@ CTNewArray2DXAndY >> arrayOfY [
 	^ (1 to: self height) collect: [ :y | self atY: y ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2DXAndY >> atX: x [
 	"Answer the content of the whole column at index x"
 
@@ -41,21 +43,21 @@ CTNewArray2DXAndY >> atX: x [
 	^ column
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2DXAndY >> atX: x atY: y [
 	"Answer the element at index x, y."
 
 	^ contents at: (self indexOfX: x y: y)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2DXAndY >> atX: x atY: y put: value [
 	"Answer the element at index x, y."
 
 	^ contents at: (self indexOfX: x y: y) put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2DXAndY >> atX: x put: aCollection [
 	"Put in a whole column."
 
@@ -64,7 +66,7 @@ CTNewArray2DXAndY >> atX: x put: aCollection [
 	^ aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2DXAndY >> atY: y [
 	"Answer the content of the whole column at y"
 
@@ -73,7 +75,7 @@ CTNewArray2DXAndY >> atY: y [
 	^ contents copyFrom: (y - 1) * width + 1 to: y * width
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2DXAndY >> atY: y put: aCollection [
 	"Put in a whole row."
 
@@ -82,13 +84,13 @@ CTNewArray2DXAndY >> atY: y put: aCollection [
 	^ aCollection
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 CTNewArray2DXAndY >> isSelfEvaluating [
 
 	^ self class == CTNewArray2DXAndY and: [ contents isSelfEvaluating ]
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 CTNewArray2DXAndY >> printGridOn: aStream [
 
 	"A raw grid-like representation"
@@ -101,7 +103,7 @@ CTNewArray2DXAndY >> printGridOn: aStream [
 					aStream cr ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2DXAndY >> printXOn: aStream [
 
 	self xDo: [ :x | 
@@ -109,7 +111,7 @@ CTNewArray2DXAndY >> printXOn: aStream [
 		aStream cr ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2DXAndY >> printYOn: aStream [
 
 	self yDo: [ :y | 
@@ -117,14 +119,14 @@ CTNewArray2DXAndY >> printYOn: aStream [
 		aStream cr ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2DXAndY >> xDo: aBlock [
 	"Iterate on each column. See also `atX:` and `arrayOfX`"
 
 	1 to: self width do: [ :x | aBlock value: (self atX: x) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTNewArray2DXAndY >> yDo: aBlock [
 	"Iterate on each row. See also `atY:` and `arrayOfY`"
 

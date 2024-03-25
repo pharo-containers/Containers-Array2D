@@ -4,21 +4,22 @@ Check the numerous tests.
 
 "
 Class {
-	#name : #CTArray2D,
-	#superclass : #Object,
+	#name : 'CTArray2D',
+	#superclass : 'Object',
 	#instVars : [
 		'width',
 		'contents'
 	],
-	#category : #'Containers-Array2D'
+	#category : 'Containers-Array2D',
+	#package : 'Containers-Array2D'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CTArray2D class >> extent: aPoint [
 	^ self width: aPoint x height: aPoint y
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CTArray2D class >> fromArray: aCollection width: aSize [
 	
 	(aCollection size \\ aSize) isZero 
@@ -29,7 +30,7 @@ CTArray2D class >> fromArray: aCollection width: aSize [
 	
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CTArray2D class >> fromRows: rows pad: paddingElement [
 
 	"Allocate an Array2D large enough to accomodate the given rows.
@@ -70,18 +71,18 @@ c
 	^ self fromArray: contents width: width.
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CTArray2D class >> new [
 
 	^ self basicNew
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CTArray2D class >> new: size [
 	self error: 'Use >>self width: x height: y<< instead'
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 CTArray2D class >> width2Height3 [
 	<sampleInstance>
 	"self width2Height3"
@@ -96,12 +97,12 @@ CTArray2D class >> width2Height3 [
 	^ i
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CTArray2D class >> width: width height: height [
 	^ self basicNew width: width height: height type: Array
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CTArray2D class >> width: width height: height tabulate: aTwoArgumentBlock [
 
 	"Answer a new CTArray2D of the given dimensions where
@@ -115,12 +116,12 @@ CTArray2D class >> width: width height: height tabulate: aTwoArgumentBlock [
 	^ newArray
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CTArray2D class >> width: width height: height type: collectionClass [
 	^ self basicNew width: width height: height type: collectionClass
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CTArray2D >> = anArray2D [
 	"Two array2D are equal if
 	 (a) they are the same 'kind' of thing.
@@ -132,34 +133,34 @@ CTArray2D >> = anArray2D [
 	^ contents = anArray2D contents.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 CTArray2D >> asArray [
 	"return a copy of the receiver"
 	^ contents copy
 ]
 
-{ #category : #'accessing convenience' }
+{ #category : 'accessing convenience' }
 CTArray2D >> at: aPoint [
 	"Answer the element at index Point x, Point y."
 
 	^ contents at: (self indexX: aPoint x y: aPoint y)
 ]
 
-{ #category : #'accessing convenience' }
+{ #category : 'accessing convenience' }
 CTArray2D >> at: aPoint put: value [
 	"Store a value at index aPoint x, aPoint y and answer it."
 
 	^ contents at: (self indexX: aPoint x y: aPoint y) put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTArray2D >> atAllPut: anObject [
 	"Put anObject at every one of the receiver's indices."
 
 	contents atAllPut: anObject
 ]
 
-{ #category : #'accessing rows/columns' }
+{ #category : 'accessing rows/columns' }
 CTArray2D >> atColumn: x [
 	"Answer the content of the whole column at index x"
 
@@ -169,21 +170,21 @@ CTArray2D >> atColumn: x [
 	^ column
 ]
 
-{ #category : #'accessing rows/columns' }
+{ #category : 'accessing rows/columns' }
 CTArray2D >> atColumn: x atRow: y [
 	"Answer the element at index x, y."
 
 	^ contents at: (self indexX: x y: y)
 ]
 
-{ #category : #'accessing rows/columns' }
+{ #category : 'accessing rows/columns' }
 CTArray2D >> atColumn: x atRow: y put: value [
 	"Store a value at index x,y and answer it."
 
 	^ contents at: (self indexX: x y: y) put: value
 ]
 
-{ #category : #'accessing rows/columns' }
+{ #category : 'accessing rows/columns' }
 CTArray2D >> atColumn: x put: aCollection [
 	"Put in a whole column."
 
@@ -192,7 +193,7 @@ CTArray2D >> atColumn: x put: aCollection [
 	^ aCollection
 ]
 
-{ #category : #'accessing rows/columns' }
+{ #category : 'accessing rows/columns' }
 CTArray2D >> atRow: y [
 	"Answer the content of the whole column at y"
 
@@ -201,7 +202,7 @@ CTArray2D >> atRow: y [
 	^ contents copyFrom: (y - 1) * width + 1 to: y * width
 ]
 
-{ #category : #'accessing rows/columns' }
+{ #category : 'accessing rows/columns' }
 CTArray2D >> atRow: y put: aCollection [
 	"Put in a whole row."
 
@@ -210,41 +211,41 @@ CTArray2D >> atRow: y put: aCollection [
 	^ aCollection
 ]
 
-{ #category : #'accessing x/y' }
+{ #category : 'accessing x/y' }
 CTArray2D >> atX: x atY: y [
 	"Answer the element at index x, y."
 
 	^ contents at: (self indexX: x y: y)
 ]
 
-{ #category : #'accessing x/y' }
+{ #category : 'accessing x/y' }
 CTArray2D >> atX: x atY: y put: value [
 	"Store a value at index x,y and answer it."
 
 	^ contents at: (self indexX: x y: y) put: value
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CTArray2D >> contents [
 
 	^ contents
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 CTArray2D >> do: aBlock [
 	"Iterate with X varying most quickly."
 
 	contents do: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTArray2D >> extent [
 	"Answer the receiver's dimensions as point."
 
 	^ self width @ self height
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CTArray2D >> extent: extent fromArray: anArray [
 	"Extent the receiver to anArray size and load it with anArray contents "
 
@@ -254,20 +255,20 @@ CTArray2D >> extent: extent fromArray: anArray [
 	contents := anArray
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CTArray2D >> hash [
 
 	^ contents hash + width
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTArray2D >> height [
     "Answer the receiver's height, i.e., its number of row/lines or y."
 
 	^ contents size // width
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CTArray2D >> indexX: x y: y [
 	"Answer the receiver coordonnate in 1D, for example:
 	  foo := #( 0 2 4
@@ -280,13 +281,13 @@ CTArray2D >> indexX: x y: y [
 	^ (y - 1) * width + x
 ]
 
-{ #category : #'self evaluating' }
+{ #category : 'self evaluating' }
 CTArray2D >> isSelfEvaluating [
 
 	^ self class == CTArray2D and: [ contents isSelfEvaluating ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CTArray2D >> leftToRightFromBottomToTopDo: aBlock [
 	"Apply a block to each element following that order left to right but from bottom to top"
 	"123
@@ -300,27 +301,27 @@ CTArray2D >> leftToRightFromBottomToTopDo: aBlock [
 			aBlock  value: (self atColumn: col atRow: row)]]
 ]
 
-{ #category : #'accessing - compatibility' }
+{ #category : 'accessing - compatibility' }
 CTArray2D >> numberOfColumns [
     "Answer the receiver's width, i.e., its number of x"
 
 	^ self width
 ]
 
-{ #category : #'accessing - compatibility' }
+{ #category : 'accessing - compatibility' }
 CTArray2D >> numberOfRows [
     "Answer the receiver's height, i.e., its number of row/lines or y."
 
 	^ self height
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 CTArray2D >> postCopy [
 	super postCopy. 
 	self setContents: contents copy
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CTArray2D >> printGridOn: aStream [
 
 	"A raw grid-like representation"
@@ -333,7 +334,7 @@ CTArray2D >> printGridOn: aStream [
 					aStream cr ].
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CTArray2D >> printOn: aStream [
 
 	"Self evaluating representation is prefered"
@@ -360,7 +361,7 @@ CTArray2D >> printOn: aStream [
 	aStream nextPutAll: ')'.
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CTArray2D >> printRowsOn: aStream [
 
 	self rowsDo: [ :row | 
@@ -368,7 +369,7 @@ CTArray2D >> printRowsOn: aStream [
 		aStream cr ]
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 CTArray2D >> rowAndColumnValuesDo: aBlock [
 	"aBlock is expecting three values: row, column and value"
 	
@@ -377,7 +378,7 @@ CTArray2D >> rowAndColumnValuesDo: aBlock [
 			aBlock value: row value: col value: (self atColumn: col atRow: row)]]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 CTArray2D >> rows [
 
 	"Returns an array of rows."
@@ -388,7 +389,7 @@ CTArray2D >> rows [
 	^ (1 to: self height) collect: [ :rowIndex | self atRow: rowIndex ]
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 CTArray2D >> rowsAndColumnsDo: aBlock [
 	"rows iteration implies from top to bottom and row elements first, column by column"
 	1 to: self width do: [:col |
@@ -396,7 +397,7 @@ CTArray2D >> rowsAndColumnsDo: aBlock [
 			aBlock value: row value: col]]
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 CTArray2D >> rowsAndColumnsPut: aTwoArgumentBlock [
 	"Set the value at col,row as the value of aTwoArgumentBlock with row and column as inputs."
 
@@ -407,46 +408,46 @@ CTArray2D >> rowsAndColumnsPut: aTwoArgumentBlock [
 				put: (aTwoArgumentBlock value: row value: col) ] ]
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 CTArray2D >> rowsDo: aBlock [
 	"Iterate on each row. See also `atRow:` and `rows`"
 
 	1 to: self height do: [ :i | aBlock value: (self atRow: i) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CTArray2D >> setContents: aCollection [
 	"set the content of the array with aCollection"
 	contents := aCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CTArray2D >> setWidth: aSize [
 	"Set the width of the receiver. It should be in sync with the size of the internal array used to store the contents, i.e., contents size \\ aSize should always be zero."
 	
 	width := aSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTArray2D >> size [
 	^ contents size
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 CTArray2D >> topDownDo: aBlock [
 	"Iterate with X varying most quickly."
 
 	contents do: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CTArray2D >> width [
 	"Answer the receiver's width, i.e., number of columns or x."
 
 	^ width
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CTArray2D >> width: x height: y type: collectionClass [
 	"Set the number of elements in the first and second dimension.
 	collectionClass can be Array or String or ByteArray but shouldn't be initialized."
