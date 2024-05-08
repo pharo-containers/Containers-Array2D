@@ -13,7 +13,7 @@ can only load the collection they need without 100 of related collections.
 
 ## Loading
 
-```
+```smalltalk
 Metacello new
   baseline: 'ContainersArray2D';
   repository: 'github://pharo-containers/Containers-Array2D/src';
@@ -22,9 +22,9 @@ Metacello new
 
 ## If you want to depend on it
 
-```
+```smalltalk
   spec 
-    baseline: ''ContainersArray2D' 
+    baseline: 'ContainersArray2D' 
     with: [ spec repository: 'github://pharo-containers/Containers-Array2D/src' ].
   ```
 
