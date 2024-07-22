@@ -204,6 +204,17 @@ CTNewArray2D >> extent: extent fromArray: anArray [
 	contents := anArray
 ]
 
+{ #category : 'as yet unclassified' }
+CTNewArray2D >> fillIfEmpty [ 
+
+	self isEmpty ifFalse: [ ^ self ].
+	
+	self tabulate: [ :x :y | MygAbstractBox new ].
+	
+	^ self 
+	
+]
+
 { #category : 'enumerating' }
 CTNewArray2D >> fromBottomToTopFromLeftToRightDo: aBlock [
 	"Apply a block to each element following that order bottom to top but from left gto right "
@@ -339,6 +350,12 @@ CTNewArray2D >> indexOfX: x y: y [
 	(x < 1 or: [ x > width ]) | (y < 1 or: [ y > self height ])
 		ifTrue: [ self errorSubscriptBounds: x ].
 	^ (y - 1) * width + x
+]
+
+{ #category : 'testing' }
+CTNewArray2D >> isEmpty [ 
+	
+	^ self contents includes: nil
 ]
 
 { #category : 'inspector' }

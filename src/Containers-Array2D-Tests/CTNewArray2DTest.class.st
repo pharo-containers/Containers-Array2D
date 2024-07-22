@@ -105,6 +105,19 @@ CTNewArray2DTest >> testExtentFromArray [
 ]
 
 { #category : 'tests' }
+CTNewArray2DTest >> testFillIfEmpty [ 
+
+	| array |
+	array := CTNewArray2D width: 2 height: 3. 
+	
+	self assert: array isEmpty.
+	
+	array fillIfEmpty.
+	
+	self deny: array isEmpty.
+]
+
+{ #category : 'tests' }
 CTNewArray2DTest >> testFromArray [
 	
 	| a2 |
