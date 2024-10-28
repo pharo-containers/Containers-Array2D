@@ -1,5 +1,9 @@
 # Containers-Array2D
 
+<a href="https://www.pharo.org">
+    <img alt="Pharo" src="https://img.shields.io/static/v1?style=for-the-badge&message=Pharo&color=3297d4&logo=Harbor&logoColor=FFFFFF&label=" />
+</a>
+
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://img.shields.io/badge/license-MIT-blue.svg)
 ![https://github.com/pharo-containers/Containers-Array2D/workflows/matrix/badge.svg](https://github.com/pharo-containers/Containers-Array2D/workflows/matrix/badge.svg)
 ![https://github.com/pharo-containers/Containers-Array2D/workflows/currentStablePharo/badge.svg](https://github.com/pharo-containers/Containers-Array2D/workflows/currentStablePharo/badge.svg)
