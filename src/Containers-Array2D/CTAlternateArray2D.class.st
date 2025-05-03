@@ -1,152 +1,157 @@
-"
-Class inspired by from the book ""Fundamentals of Smalltalk Programming Technique""
-
-
-The first element of an array2D is located on topleft corner.
-"
 Class {
 	#name : 'CTAlternateArray2D',
 	#superclass : 'Object',
 	#instVars : [
-		'rows',
-		'dimension'
+		'contents',
+		'width',
+		'height'
 	],
 	#category : 'Containers-Array2D',
 	#package : 'Containers-Array2D'
 }
 
-{ #category : 'examples' }
+{ #category : 'instance creation' }
+CTAlternateArray2D class >> new [
+	^ self basicNew initialize
+]
+
+{ #category : 'instance creation' }
+CTAlternateArray2D class >> width: aWidth height: aHeight [
+	^ self new
+		dimension: aWidth @ aHeight;
+		yourself
+]
+
+{ #category : 'instance creation' }
 CTAlternateArray2D class >> width2Height3 [
-	<sampleInstance>
-	"self width2Height3"
-	| i |
-	i := self new dimension: 2@3.
-	i at: 1@1 put: 1.
-	i at: 2@1 put: 2.
-	i at: 1@2 put: 3.
-	i at: 2@2 put: 4.
-	i at: 1@3 put: 5.
-	i at: 2@3 put: 6.
-	^ i
+	^ self fromArray: #(1 2 3 4 5 6) width: 2
 ]
 
-{ #category : 'iterate' }
-CTAlternateArray2D >> allPositionsDo: aBlock [
-	"Execute a Block on all the positions (points) of the receiver."
-	self firstPosition pointTo: self dimension do: aBlock
-]
-
-{ #category : 'iterate' }
-CTAlternateArray2D >> allPositionsWithin: someDistance from: someOrigin [
-	| answer topLeft bottomRight |
-	answer := OrderedCollection new.
-	topLeft := someOrigin - someDistance max: self firstPosition.
-	bottomRight := someOrigin + someDistance min: self dimension.
-	topLeft pointTo: bottomRight do: [ :each | answer add: each ].
-	^ answer
+{ #category : 'instance creation' }
+CTAlternateArray2D class >> fromArray: anArray width: aWidth [
+	| height |
+	height := anArray size // aWidth.
+	^ self new
+		dimension: aWidth @ height;
+		setContents: anArray;
+		yourself
 ]
 
 { #category : 'accessing' }
 CTAlternateArray2D >> at: aPoint [
-	| row |
-	row := self atRow: aPoint y.
-	^ row at: aPoint x
+	^ contents at: (self storageIndexFor: aPoint)
 ]
 
 { #category : 'accessing' }
-CTAlternateArray2D >> at: aPoint put: anObject [
-	| row |
-	row := self atRow: aPoint y.
-	row atWrap: aPoint x put: anObject
+CTAlternateArray2D >> at: aPoint put: aValue [
+	^ contents at: (self storageIndexFor: aPoint) put: aValue
 ]
 
 { #category : 'accessing' }
-CTAlternateArray2D >> atRow: anInteger [
-	^ self rows at: anInteger 
+CTAlternateArray2D >> atRow: rowIndex [
+	(rowIndex < 1 or: [ rowIndex > self height ])
+		ifTrue: [ self errorSubscriptBounds: rowIndex ].
+	^ contents copyFrom: (rowIndex - 1) * width + 1 to: rowIndex * width
+]
+
+{ #category : 'iterating' }
+CTAlternateArray2D >> allPositionsDo: aBlock [
+	1 to: self width do: [ :x |
+		1 to: self height do: [ :y |
+			aBlock value: x @ y ] ]
+]
+
+{ #category : 'iterating' }
+CTAlternateArray2D >> allPositionsWithin: aPoint from: anotherPoint [
+	| result minX maxX minY maxY |
+	result := OrderedCollection new.
+	minX := (anotherPoint x - aPoint x) max: 1.
+	maxX := (anotherPoint x + aPoint x) min: self width.
+	minY := (anotherPoint y - aPoint y) max: 1.
+	maxY := (anotherPoint y + aPoint y) min: self height.
+	minX to: maxX do: [ :x |
+		minY to: maxY do: [ :y |
+			result add: x @ y ] ].
+	^ result
 ]
 
 { #category : 'accessing' }
 CTAlternateArray2D >> dimension [
-	^ dimension
+	^ width @ height
 ]
 
-{ #category : 'initialize' }
+{ #category : 'accessing' }
 CTAlternateArray2D >> dimension: aPoint [
-	dimension := aPoint.
-	self initializeRows
+	width := aPoint x.
+	height := aPoint y.
+	contents := Array new: width * height
 ]
 
-{ #category : 'iterate' }
+{ #category : 'iterating' }
 CTAlternateArray2D >> do: aBlock [
-	self rowsDo: [ :eachRow | eachRow do: aBlock ]
+	contents do: aBlock
 ]
 
 { #category : 'accessing' }
 CTAlternateArray2D >> firstPosition [
-	^ 1@1
+	^ 1 @ 1
 ]
 
 { #category : 'accessing' }
 CTAlternateArray2D >> height [
-	^ self dimension y
+	^ height
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 CTAlternateArray2D >> initialize [
-	self dimension: 0@0
-]
-
-{ #category : 'initialize' }
-CTAlternateArray2D >> initializeRows [
-	| newRows |
-	newRows := (1 to: self height) collect: [ :each | self newRow ].
-	self rows: newRows asArray 
+	width := 0.
+	height := 0.
+	contents := #().
 ]
 
 { #category : 'private' }
 CTAlternateArray2D >> newRow [
-	^ self newRowWithWidth: self width 
+	^ Array new: width
 ]
 
 { #category : 'private' }
-CTAlternateArray2D >> newRowWithWidth: anInteger [
-	^ Array new: anInteger  
+CTAlternateArray2D >> newRowWithWidth: aWidth [
+	^ Array new: aWidth
 ]
 
 { #category : 'copying' }
 CTAlternateArray2D >> postCopy [
-	| newRows |
-	super postCopy.
-	newRows := self rows collect: [  :each | each copy ].
-	self rows: newRows
+	contents := contents copy
 ]
 
 { #category : 'accessing' }
 CTAlternateArray2D >> rows [
-	^ rows
+	^ (1 to: self height) collect: [ :rowIndex | self atRow: rowIndex ]
 ]
 
-{ #category : 'accessing' }
-CTAlternateArray2D >> rows: someRows [
-	rows := someRows
-]
-
-{ #category : 'iterate' }
+{ #category : 'iterating' }
 CTAlternateArray2D >> rowsDo: aBlock [
-	self rows do: aBlock 
+	1 to: self height do: [ :i | aBlock value: (self atRow: i) ]
+]
+
+{ #category : 'private' }
+CTAlternateArray2D >> setContents: anArray [
+	contents := anArray copy
 ]
 
 { #category : 'accessing' }
 CTAlternateArray2D >> size [
-	^ self dimension x * self dimension y
+	^ width * height
 ]
 
 { #category : 'private' }
 CTAlternateArray2D >> storageIndexFor: aPoint [
-	^ aPoint y - 1 * self dimension x + aPoint x
+	(aPoint x < 1 or: [ aPoint x > width or: [ aPoint y < 1 or: [ aPoint y > height ] ] ])
+		ifTrue: [ self errorSubscriptBounds: aPoint ].
+	^ (aPoint y - 1) * width + aPoint x
 ]
 
 { #category : 'accessing' }
 CTAlternateArray2D >> width [
-	^ self dimension x
+	^ width
 ]
