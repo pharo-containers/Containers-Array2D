@@ -88,6 +88,34 @@ CTArray2DTest >> testAtColumnPut [
 ]
 
 { #category : 'tests-accessing' }
+CTArray2DTest >> testAtColumnWrapAtRowWrap [
+
+	| array |
+	array := self arrayClass width2Height3.
+	
+	self assert: (array atColumnWrap: 1 atRowWrap: 1) equals: 1.
+	
+	self assert: (array atColumnWrap: 3 atRowWrap: 1) equals: 1.
+	
+	self assert: (array atColumnWrap: 2 atRowWrap: 4) equals: 2.
+	
+	self assert: (array atColumnWrap: 0 atRowWrap: 0) equals: 6.
+]
+
+{ #category : 'tests-accessing' }
+CTArray2DTest >> testAtColumnWrapAtRowWrapPut [
+
+	| array |
+	array := self arrayClass width2Height3.
+	
+	array atColumnWrap: 3 atRowWrap: 2 put: 99.
+	self assert: (array atColumn: 1 atRow: 2) equals: 99.
+	
+	array atColumnWrap: 0 atRowWrap: 0 put: 88.
+	self assert: (array atColumn: 2 atRow: 3) equals: 88.
+]
+
+{ #category : 'tests-accessing' }
 CTArray2DTest >> testAtPut [
 	
 	| foo |
@@ -234,6 +262,33 @@ CTArray2DTest >> testLeftToRightFromBottomToTopDo [
 	a2d leftToRightFromBottomToTopDo: [ :each | res add: each ].
 	self assert: res equals: #(4 5 6 1 2 3 ) asOrderedCollection
 	 
+]
+
+{ #category : 'tests-accessing' }
+CTArray2DTest >> testNeighborsAtColumnAtRow [
+
+	| array neighbors topCornerNeighbors |
+	array := self arrayClass width2Height3.
+	
+	neighbors := array neighborsAtColumn: 1 atRow: 2.
+	self assert: neighbors size equals: 5.
+	self assert: (neighbors includesAll: #(1 2 4 5 6)).
+	
+	topCornerNeighbors := array neighborsAtColumn: 1 atRow: 1.
+	self assert: topCornerNeighbors size equals: 3.
+	self assert: (topCornerNeighbors includesAll: #(2 3 4)).
+]
+
+{ #category : 'tests-accessing' }
+CTArray2DTest >> testNeighborsEight [
+
+	| array neighbors |
+	array := self arrayClass fromArray: #(1 2 3 4 5 6 7 8 9) width: 3.
+	
+	neighbors := array neighborsAtColumn: 2 atRow: 2.
+	
+	self assert: neighbors size equals: 8.
+	self assert: (neighbors includesAll: #(1 2 3 4 6 7 8 9)).
 ]
 
 { #category : 'tests-printing' }

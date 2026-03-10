@@ -193,6 +193,26 @@ CTArray2D >> atColumn: x put: aCollection [
 	^ aCollection
 ]
 
+{ #category : 'accessing' }
+CTArray2D >> atColumnWrap: col atRowWrap: row [
+	
+	| wrappedCol wrappedRow |
+	wrappedCol := ((col - 1) \\ self width) + 1.
+	wrappedRow := ((row - 1) \\ self height) + 1.
+	
+	^ self atColumn: wrappedCol atRow: wrappedRow
+]
+
+{ #category : 'accessing' }
+CTArray2D >> atColumnWrap: col atRowWrap: row put: aValue [
+
+	| wrappedCol wrappedRow |
+	wrappedCol := ((col - 1) \\ self width) + 1.
+	wrappedRow := ((row - 1) \\ self height) + 1.
+	
+	^ self atColumn: wrappedCol atRow: wrappedRow put: aValue
+]
+
 { #category : 'accessing rows/columns' }
 CTArray2D >> atRow: y [
 	"Answer the content of the whole column at y"
@@ -299,6 +319,22 @@ CTArray2D >> leftToRightFromBottomToTopDo: aBlock [
 	 self height to: 1 by: -1 do: [:row |
 		1 to: self width do: [:col |
 			aBlock  value: (self atColumn: col atRow: row)]]
+]
+
+{ #category : 'enumerating' }
+CTArray2D >> neighborsAtColumn: col atRow: row [
+	
+	| neighbors |
+	neighbors := OrderedCollection new.
+	
+	row - 1 to: row + 1 do: [ :r |
+		col - 1 to: col + 1 do: [ :c |
+			(r = row and: [ c = col ]) ifFalse: [
+				(r between: 1 and: self height) ifTrue: [
+					(c between: 1 and: self width) ifTrue: [
+						neighbors add: (self atColumn: c atRow: r) ] ] ] ] ].
+						
+	^ neighbors
 ]
 
 { #category : 'accessing - compatibility' }
