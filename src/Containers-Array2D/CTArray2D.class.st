@@ -225,6 +225,16 @@ CTArray2D >> atX: x atY: y put: value [
 	^ contents at: (self indexX: x y: y) put: value
 ]
 
+{ #category : 'converting' }
+CTArray2D >> columns [
+	^ (1 to: self width) collect: [ :columnIndex | self atColumn: columnIndex ]
+]
+
+{ #category : 'enumeration' }
+CTArray2D >> columnsDo: aBlock [
+	1 to: self width do: [ :i | aBlock value: (self atColumn: i) ]
+]
+
 { #category : 'private' }
 CTArray2D >> contents [
 
@@ -253,6 +263,62 @@ CTArray2D >> extent: extent fromArray: anArray [
 		ifFalse: [ ^ self error: 'dimensions don''t match' ].
 	width := extent x.
 	contents := anArray
+]
+
+{ #category : 'enumerating' }
+CTArray2D >> fromBottomToTopFromLeftToRightDo: aBlock [
+	1 to: self width do: [:col |
+		self height to: 1 by: -1 do: [:row |
+			aBlock value: (self atColumn: col atRow: row)]]
+]
+
+{ #category : 'enumerating' }
+CTArray2D >> fromBottomToTopFromRightToLeftDo: aBlock [
+	self width to: 1 by: -1 do: [:col |
+		self height to: 1 by: -1 do: [:row |
+			aBlock value: (self atColumn: col atRow: row)]]
+]
+
+{ #category : 'enumerating' }
+CTArray2D >> fromLeftToRightFromBottomToTopDo: aBlock [
+	self height to: 1 by: -1 do: [:row |
+		1 to: self width do: [:col |
+			aBlock value: (self atColumn: col atRow: row)]]
+]
+
+{ #category : 'enumerating' }
+CTArray2D >> fromLeftToRightFromTopToBottomDo: aBlock [
+	1 to: self height do: [ :row |
+		1 to: self width do: [ :col |
+			aBlock value: (self atColumn: col atRow: row) ] ]
+]
+
+{ #category : 'enumerating' }
+CTArray2D >> fromRightToLeftFromBottomToTopDo: aBlock [
+	self height to: 1 by: -1 do: [:row |
+		self width to: 1 by: -1 do: [:col |
+			aBlock value: (self atColumn: col atRow: row)]]
+]
+
+{ #category : 'enumerating' }
+CTArray2D >> fromRightToLeftFromTopToBottomDo: aBlock [
+	1 to: self height do: [:row |
+		self width to: 1 by: -1 do: [:col |
+			aBlock value: (self atColumn: col atRow: row)]]
+]
+
+{ #category : 'enumerating' }
+CTArray2D >> fromTopToBottomFromLeftToRightDo: aBlock [
+	1 to: self width do: [:col |
+		1 to: self height do: [:row |
+			aBlock value: (self atColumn: col atRow: row)]]
+]
+
+{ #category : 'enumerating' }
+CTArray2D >> fromTopToBottomFromRightToLeftDo: aBlock [
+	self width to: 1 by: -1 do: [:col |
+		1 to: self height do: [:row |
+			aBlock value: (self atColumn: col atRow: row)]]
 ]
 
 { #category : 'comparing' }
@@ -285,20 +351,6 @@ CTArray2D >> indexX: x y: y [
 CTArray2D >> isSelfEvaluating [
 
 	^ self class == CTArray2D and: [ contents isSelfEvaluating ]
-]
-
-{ #category : 'enumerating' }
-CTArray2D >> leftToRightFromBottomToTopDo: aBlock [
-	"Apply a block to each element following that order left to right but from bottom to top"
-	"123
-	456
-	=> 
-	456123
-	"
-	
-	 self height to: 1 by: -1 do: [:row |
-		1 to: self width do: [:col |
-			aBlock  value: (self atColumn: col atRow: row)]]
 ]
 
 { #category : 'accessing - compatibility' }
