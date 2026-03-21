@@ -184,6 +184,39 @@ CTNewArray2DTest >> testFromRowsPad [
 ]
 
 { #category : 'tests' }
+CTNewArray2DTest >> testFromRowsPadNoPaddingNeeded [
+	| array |
+	array := self arrayClass fromRows: #( #(1 2) #(3 4) ) pad: 99.
+	
+	self assert: array width equals: 2.
+	self assert: array height equals: 2.
+	self assert: (array atRow: 1) equals: #(1 2).
+	self assert: (array atRow: 2) equals: #(3 4).
+]
+
+{ #category : 'tests' }
+CTNewArray2DTest >> testFromRowsPadWithCharacters [
+	| array |
+	array := self arrayClass fromRows: #( #($a $b) #($c) ) pad: $x.
+	
+	self assert: array width equals: 2.
+	self assert: array height equals: 2.
+	self assert: (array atRow: 1) equals: #($a $b).
+	self assert: (array atRow: 2) equals: #($c $x).
+]
+
+{ #category : 'tests' }
+CTNewArray2DTest >> testFromRowsPadWithNil [
+	| array |
+	array := self arrayClass fromRows: #( #(1) #(2 3) ) pad: nil.
+	
+	self assert: array width equals: 2.
+	self assert: array height equals: 2.
+	self assert: (array atRow: 1) equals: #(1 nil).
+	self assert: (array atRow: 2) equals: #(2 3).
+]
+
+{ #category : 'tests' }
 CTNewArray2DTest >> testFromTopToBottomFromLeftToRightDo [
 	|foo res|
 	foo := self arrayClass width2Height3.
