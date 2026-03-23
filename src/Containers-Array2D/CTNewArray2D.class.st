@@ -43,6 +43,21 @@ CTNewArray2D class >> fromArray: aCollection width: aSize [
 ]
 
 { #category : 'instance creation' }
+CTNewArray2D class >> fromRows: rows pad: paddingElement [
+	| width contents pad |
+	width := rows max: [ :row | row size ].
+	contents := rows first species new: (width * rows size) streamContents: [ :aStream |
+		rows do: [  :row |
+			aStream nextPutAll: row.
+			pad := width - row size.
+			pad > 0 ifTrue: [ aStream next: pad put: paddingElement ].
+		]
+	].
+
+	^ self fromArray: contents width: width
+]
+
+{ #category : 'instance creation' }
 CTNewArray2D class >> new [
 
 	^ self basicNew
