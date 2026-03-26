@@ -279,6 +279,38 @@ CTArray2DTest >> testNeighborsAtColumnAtRow [
 	self assert: (topCornerNeighbors includesAll: #(2 3 4)).
 ]
 
+{ #category : 'tests' }
+CTArray2DTest >> testNeighborsAtColumnAtRowOutOfBounds [
+
+	| array |
+
+	array := self arrayClass width2Height3.
+
+	self should: [ array neighborsAtColumn: 99 atRow: 99 ] raise: Error.
+]
+
+{ #category : 'tests' }
+CTArray2DTest >> testNeighborsAtColumnWrapAtRowWrap [
+
+	| array neighbors |
+
+	array := self arrayClass fromArray: #(1 2 3 4 5 6 7 8 9) width: 3.
+
+	neighbors := array neighborsAtColumnWrap: 1 atRowWrap: 1.
+
+	self assert: neighbors size equals: 8.
+	self assert: (neighbors includesAll: #(2 3 4 5 6 7 8 9)).
+]
+
+{ #category : 'tests' }
+CTArray2DTest >> testNeighborsAtColumnWrapAtRowWrapOutOfBounds [
+	| array |
+
+	array := self arrayClass width2Height3.
+
+	self should: [ array neighborsAtColumnWrap: 99 atRowWrap: 99 ] raise: Error.
+]
+
 { #category : 'tests-accessing' }
 CTArray2DTest >> testNeighborsEight [
 

@@ -323,17 +323,39 @@ CTArray2D >> leftToRightFromBottomToTopDo: aBlock [
 
 { #category : 'enumerating' }
 CTArray2D >> neighborsAtColumn: col atRow: row [
-	
+
 	| neighbors |
+
+	(col between: 1 and: self width) ifFalse: [ self error: 'Column out of bounds' ].
+	(row between: 1 and: self height) ifFalse: [ self error: 'Row out of bounds' ].
+
 	neighbors := OrderedCollection new.
-	
+
 	row - 1 to: row + 1 do: [ :r |
 		col - 1 to: col + 1 do: [ :c |
 			(r = row and: [ c = col ]) ifFalse: [
 				(r between: 1 and: self height) ifTrue: [
 					(c between: 1 and: self width) ifTrue: [
 						neighbors add: (self atColumn: c atRow: r) ] ] ] ] ].
-						
+
+	^ neighbors
+]
+
+{ #category : 'enumerating' }
+CTArray2D >> neighborsAtColumnWrap: col atRowWrap: row [
+
+	| neighbors |
+
+	(col between: 1 and: self width) ifFalse: [ self error: 'Column out of bounds' ].
+	(row between: 1 and: self height) ifFalse: [ self error: 'Row out of bounds' ].
+
+	neighbors := OrderedCollection new.
+
+	row - 1 to: row + 1 do: [ :r |
+		col - 1 to: col + 1 do: [ :c |
+			(r = row and: [ c = col ]) ifFalse: [
+				neighbors add: (self atColumnWrap: c atRowWrap: r) ] ] ].
+
 	^ neighbors
 ]
 
