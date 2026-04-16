@@ -193,6 +193,28 @@ CTArray2D >> atColumn: x put: aCollection [
 	^ aCollection
 ]
 
+{ #category : 'accessing' }
+CTArray2D >> atColumnWrap: col atRowWrap: row [
+	"Answer the element at the given coordinates. If the coordinates are outside the grid bounds, they wrap around using 1-based indexing logic to ensure seamless boundary traversal."
+	
+	| wrappedCol wrappedRow |
+	wrappedCol := ((col - 1) \\ self width) + 1.
+	wrappedRow := ((row - 1) \\ self height) + 1.
+	
+	^ self atColumn: wrappedCol atRow: wrappedRow
+]
+
+{ #category : 'accessing' }
+CTArray2D >> atColumnWrap: col atRowWrap: row put: aValue [
+	"Store the given value at the specified coordinates. If the coordinates are  outside the grid bounds, they wrap around using 1-based indexing logic (e.g., in a grid of width 3, column 4 wraps to 1, and column 0 wraps to 3)."
+	
+	| wrappedCol wrappedRow |
+	wrappedCol := ((col - 1) \\ self width) + 1.
+	wrappedRow := ((row - 1) \\ self height) + 1.
+	
+	^ self atColumn: wrappedCol atRow: wrappedRow put: aValue
+]
+
 { #category : 'accessing rows/columns' }
 CTArray2D >> atRow: y [
 	"Answer the content of the whole column at y"
@@ -351,6 +373,46 @@ CTArray2D >> indexX: x y: y [
 CTArray2D >> isSelfEvaluating [
 
 	^ self class == CTArray2D and: [ contents isSelfEvaluating ]
+]
+
+{ #category : 'enumerating' }
+CTArray2D >> neighborsAtColumn: col atRow: row [
+	"Answer a collection of up to 8 valid elements surrounding the given origin. This method does not wrap; neighbors that would fall outside the grid are ignored. Throws an error if the starting origin coordinates are out of bounds."
+	
+	| neighbors |
+
+	(col between: 1 and: self width) ifFalse: [ self error: 'Column out of bounds' ].
+	(row between: 1 and: self height) ifFalse: [ self error: 'Row out of bounds' ].
+
+	neighbors := OrderedCollection new.
+
+	row - 1 to: row + 1 do: [ :r |
+		col - 1 to: col + 1 do: [ :c |
+			(r = row and: [ c = col ]) ifFalse: [
+				(r between: 1 and: self height) ifTrue: [
+					(c between: 1 and: self width) ifTrue: [
+						neighbors add: (self atColumn: c atRow: r) ] ] ] ] ].
+
+	^ neighbors
+]
+
+{ #category : 'enumerating' }
+CTArray2D >> neighborsAtColumnWrap: col atRowWrap: row [
+	"Answer a collection of exactly 8 elements surrounding the given origin, wrapping across grid boundaries where necessary. Throws an error if the starting origin coordinates are out of bounds."
+	
+	| neighbors |
+
+	(col between: 1 and: self width) ifFalse: [ self error: 'Column out of bounds' ].
+	(row between: 1 and: self height) ifFalse: [ self error: 'Row out of bounds' ].
+
+	neighbors := OrderedCollection new.
+
+	row - 1 to: row + 1 do: [ :r |
+		col - 1 to: col + 1 do: [ :c |
+			(r = row and: [ c = col ]) ifFalse: [
+				neighbors add: (self atColumnWrap: c atRowWrap: r) ] ] ].
+
+	^ neighbors
 ]
 
 { #category : 'accessing - compatibility' }
