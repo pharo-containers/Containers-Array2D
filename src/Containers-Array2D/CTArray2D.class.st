@@ -195,6 +195,7 @@ CTArray2D >> atColumn: x put: aCollection [
 
 { #category : 'accessing' }
 CTArray2D >> atColumnWrap: col atRowWrap: row [
+	"Answer the element at the given coordinates. If the coordinates are outside the grid bounds, they wrap around using 1-based indexing logic to ensure seamless boundary traversal."
 	
 	| wrappedCol wrappedRow |
 	wrappedCol := ((col - 1) \\ self width) + 1.
@@ -205,7 +206,8 @@ CTArray2D >> atColumnWrap: col atRowWrap: row [
 
 { #category : 'accessing' }
 CTArray2D >> atColumnWrap: col atRowWrap: row put: aValue [
-
+	"Store the given value at the specified coordinates. If the coordinates are  outside the grid bounds, they wrap around using 1-based indexing logic (e.g., in a grid of width 3, column 4 wraps to 1, and column 0 wraps to 3)."
+	
 	| wrappedCol wrappedRow |
 	wrappedCol := ((col - 1) \\ self width) + 1.
 	wrappedRow := ((row - 1) \\ self height) + 1.
@@ -375,7 +377,8 @@ CTArray2D >> isSelfEvaluating [
 
 { #category : 'enumerating' }
 CTArray2D >> neighborsAtColumn: col atRow: row [
-
+	"Answer a collection of up to 8 valid elements surrounding the given origin. This method does not wrap; neighbors that would fall outside the grid are ignored. Throws an error if the starting origin coordinates are out of bounds."
+	
 	| neighbors |
 
 	(col between: 1 and: self width) ifFalse: [ self error: 'Column out of bounds' ].
@@ -395,7 +398,8 @@ CTArray2D >> neighborsAtColumn: col atRow: row [
 
 { #category : 'enumerating' }
 CTArray2D >> neighborsAtColumnWrap: col atRowWrap: row [
-
+	"Answer a collection of exactly 8 elements surrounding the given origin, wrapping across grid boundaries where necessary. Throws an error if the starting origin coordinates are out of bounds."
+	
 	| neighbors |
 
 	(col between: 1 and: self width) ifFalse: [ self error: 'Column out of bounds' ].
