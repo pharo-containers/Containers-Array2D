@@ -406,7 +406,7 @@ CTNewArray2D >> reject: aBlock [
 	^ contents reject: aBlock
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rotation' }
 CTNewArray2D >> rotateLeft [ 
 	|tmpArray|
 	tmpArray := OrderedCollection new.
@@ -415,7 +415,7 @@ CTNewArray2D >> rotateLeft [
 	^ CTNewArray2D fromArray: tmpArray width: self height
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rotation' }
 CTNewArray2D >> rotateRight [
 
 	| tmpArray |
@@ -487,14 +487,14 @@ CTNewArray2D >> width: x height: y type: collectionClass [
 	contents := collectionClass new: x * y
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 CTNewArray2D >> withIndexes: aBinaryBlock [
 
 	^ self withIndexesDo: [ :columnIndex :rowIndex :item |
 		  aBinaryBlock value: columnIndex value: rowIndex ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 CTNewArray2D >> withIndexesDo: aThreeParametersBlock [
 
 	1 to: self height do: [ :rowIndex |
@@ -502,7 +502,7 @@ CTNewArray2D >> withIndexesDo: aThreeParametersBlock [
 			aThreeParametersBlock value: columnIndex value: rowIndex value: (self at: columnIndex @ rowIndex ) ] ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 CTNewArray2D >> withIndexesDoPut: aThreeParametersBlock [
 	"array withIndexesDoPut: [ :column :row :each |"
 	
@@ -512,7 +512,7 @@ CTNewArray2D >> withIndexesDoPut: aThreeParametersBlock [
 		aThreeParametersBlock value: column value: row value: each ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 CTNewArray2D >> withIndexesPut: aTwoArgumentBlock [
 	"Set the value at col,row as the value of aTwoArgumentBlock with row and column as inputs."
 

@@ -1,29 +1,29 @@
-Extension { #name : #CTArray2D }
+Extension { #name : 'CTArray2D' }
 
-{ #category : #'*Containers-Array2D-Tools' }
-CTArray2D >> basicPrintOnInspector [
+{ #category : '*Containers-Array2D-Tools' }
+CTArray2D >> basicPrintOnInspector: aBuilder [
 	<inspectorPresentationOrder: 35 title: 'Array2D'>
 
-	^ SpTextPresenter new 
+	^ aBuilder newText
 		text: self printString;
 		yourself
 ]
 
-{ #category : #'*Containers-Array2D-Tools' }
-CTArray2D >> inspectionGrid [
+{ #category : '*Containers-Array2D-Tools' }
+CTArray2D >> inspectionGrid: aBuilder [
 	<inspectorPresentationOrder: 35 title: 'Column/Row'>
 
-	^ SpTextPresenter new 
+	^ aBuilder newText 
 		text: (String streamContents: [ :aStream | self printGridOn: aStream ]);
 		yourself
 
 ]
 
-{ #category : #'*Containers-Array2D-Tools' }
-CTArray2D >> inspectionRows [
+{ #category : '*Containers-Array2D-Tools' }
+CTArray2D >> inspectionRows: aBuilder [
 	<inspectorPresentationOrder: 35 title: 'Rows'>
 
-	^ SpTextPresenter new 
+	^ aBuilder newText
 		text: (String streamContents: [ :aStream | self printRowsOn: aStream ]);
 		yourself
 ]
